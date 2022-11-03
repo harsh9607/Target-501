@@ -1,3 +1,5 @@
+// PRIME NUMBERS IN A RANGE  
+
 #include <iostream>
 #include<cmath> 
 
