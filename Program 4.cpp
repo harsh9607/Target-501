@@ -8,7 +8,6 @@ int main()
     cout<<"Enter the number "; 
     cin>>n;
     
-    
     while(n>0)
     {
         // x is reverse of n so if n = 123  ; x = 321 
