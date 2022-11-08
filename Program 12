@@ -4,10 +4,10 @@
 using namespace std; 
 int main() {
     
-    int n = 5 , space = -2 , star = 1; 
+    int n = 5 , space = -1* (n/2) , star = 1; 
     
     
-    for(int i=0 ;  i<5 ; i++)
+    for(int i=0 ;  i<n ; i++)
     {
          int x = space ;
          // spaces 
@@ -31,7 +31,7 @@ int main() {
              y--; 
          }
          
-         if(star < 5 && i< (n/2))
+         if(star < n && i< (n/2))
          {
              star+=2;
          }
@@ -44,10 +44,3 @@ int main() {
     
     return 0;
 }
-/*
-    *
-  * * *
-* * * * *
-  * * *
-    *
-*/
