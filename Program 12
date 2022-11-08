@@ -1,0 +1,46 @@
+//pattern 5 
+#include <iostream>
+#include<cmath> 
+using namespace std; 
+int main() {
+    
+    int n = 5 , space = -2 , star = 1; 
+    
+    
+    for(int i=0 ;  i<5 ; i++)
+    {
+         int x = space ;
+         // spaces 
+         while(abs(x)>0)
+         {
+             cout<<" ";
+             
+             if(x<0)
+             {x++;} 
+             
+             else
+             {x--;} 
+         }
+         space++;
+         
+         // stars 
+         int y = star; 
+         while(y>0)
+         {
+             cout<<"*";
+             y--; 
+         }
+         
+         if(star < 5 && i< (n/2))
+         {
+             star+=2;
+         }
+         
+         else
+         {star -=2; }
+         
+         cout<<endl;
+    }
+    
+    return 0;
+}
