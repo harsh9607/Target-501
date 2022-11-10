@@ -1,0 +1,53 @@
+// PASCALS TRIANGLE 
+#include <iostream>
+using namespace std;
+
+int main()
+{
+   int A[100],B[100];
+   for(int i=1;i<=100;i++)
+   {
+       A[i-1] = 1 ;
+       B[i-1] = 1 ;
+    }
+   
+  
+   int n; 
+   cout<<"Enter N  : \n";
+   cin>>n; 
+   
+   for(int i=0 ; i<n ; i++ )
+   {
+        if(i>=2)
+       {
+       
+       for(int k =1 ; k<i ; k++ )
+       {
+           
+           B[k] = A[k] + A[k-1];  
+       
+       }
+       
+       for(int i = 0 ; i<n ; i++)
+       {
+           A[i] = B[i] ; 
+       }
+       
+           
+       }
+       
+       
+       
+       for(int j = 0 ; j<=i ; j++)
+       {    
+           cout<<A[j]<<"\t"; 
+            
+       }
+       
+      
+       cout<<endl;
+   }
+  
+  
+    return 0;
+}
