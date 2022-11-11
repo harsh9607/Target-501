@@ -6,7 +6,7 @@ int main()
 {
 
    int number = 1, n ; 
-   cout<<"Enter val of N : " ;
+   cout<<"Enter val of N :" ;
    cin>>n;
    int spaces = (n*2) - 1 - 2  ; 
    for(int i=1 ; i<=n ; i++)
