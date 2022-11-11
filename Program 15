@@ -1,0 +1,70 @@
+#include<cmath>
+#include <iostream>
+using namespace std; 
+
+int main()
+{
+
+   int spaces = -2 , stars = 1 ,  numero = 0 ; 
+   
+   for(int i=0 ; i<5 ; i++)
+   {
+       // SPACES SECTION 
+       int x = abs(spaces) ;
+       while(x > 0 )
+       {
+           cout<<" "; 
+           x-- ; 
+       }
+       
+       // STARS WARS & NUMBERS SECTIONS
+       for( int y = 1 ; y <= stars ; y++)
+       {
+           
+            
+          if(y > int(stars/2)  + 1 ) 
+          {
+              
+             numero--; 
+             
+          }
+          else
+          {
+              numero++; 
+          }
+          
+      
+          cout<<numero ;        
+           
+           
+       }
+       
+       if(i<2)
+       {
+           stars+=2; 
+       }
+       
+       else
+       {
+           stars-=2; 
+       }
+       
+       
+       
+       
+           
+       spaces++; 
+       
+           if(spaces > 0)
+          {
+              numero = numero - 2 ;
+          }
+          
+       
+       
+       cout<<endl; 
+       
+   }
+
+    return 0;
+}
