@@ -1,0 +1,43 @@
+#include<cmath>
+#include <iostream>
+using namespace std; 
+
+int main()
+{
+
+   int number = 1, n ; 
+   cout<<"Enter val of N : " ;
+   cin>>n;
+   int spaces = (n*2) - 1 - 2  ; 
+   for(int i=1 ; i<=n ; i++)
+   {
+       int x = 1 ,s2 = spaces ,  y ;
+       while(x<=i)
+       {
+           cout<<x; 
+           x++;
+       }
+       
+       y = x-1 ;
+       if(i==n)
+       {y--;}
+       
+       while(s2>0)
+       {
+           cout<<" "; 
+           s2--; 
+       }
+       
+       while( y>0 )
+       {
+           cout<<y;
+           y--;
+       }
+       
+       spaces -=2;
+       cout<<endl; 
+   }
+   
+   
+    return 0;
+}
