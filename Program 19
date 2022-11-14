@@ -1,0 +1,28 @@
+// digit frequency 
+#include <iostream>
+
+using namespace std;
+
+int d_ctr( int x , int num )
+{
+    int freq = 0; 
+    while(x>0)
+    {
+        int k = x%10; 
+        if(k==num)
+        {
+            freq++;
+        }
+        
+        x=x/10; 
+    }
+    return freq;
+}
+
+int main()
+{
+  int x = d_ctr(177876 , 7 ); 
+  cout<<x; 
+
+    return 0;
+}
