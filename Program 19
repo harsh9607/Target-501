@@ -1,4 +1,4 @@
-// digit frequency 
+// digit frequency
 #include <iostream>
 
 using namespace std;
