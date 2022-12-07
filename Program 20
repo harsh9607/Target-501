@@ -1,0 +1,27 @@
+// Any base (upto 10) converter;
+#include <iostream>
+using namespace std ;
+
+int main() {
+
+   long int n  = 15 ,  ctr = 0, A[100] , base = 2   ; 
+    
+    while(n>0)
+    {
+        
+        A[ctr] = ( n % base );
+        ctr++;
+        n = n / base ;
+         
+        
+     }
+    
+    cout<<" Base  value is = ";
+    
+    for(int i = ctr-1 ; i>=0 ; i--)
+    {
+        cout<<A[i] ;
+    }
+    
+    return 0;
+}
