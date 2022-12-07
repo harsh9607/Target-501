@@ -1,0 +1,52 @@
+/******************************************************************************
+Any bit Substraction 
+
+*******************************************************************************/
+
+#include <iostream>
+#include<cmath> 
+using namespace std;
+
+int main()
+{
+    int carry_bit = 0 , Sub[100] , i=0 , n1 = 347 , n2 = 1444 , input_base = 8 , larger = n1 ; 
+    
+    if(n2>n1)
+    {
+        larger = n2; 
+    }
+     
+    while( larger > 0 )
+    {
+        
+        int a1 = n1 % 10 , a2 = n2 % 10 ;
+        
+        Sub[i] = a2 - a1  + carry_bit ;  
+        
+        carry_bit=0; 
+         
+        
+        if(Sub[i] < 0 )
+        {
+               
+            Sub[i] = Sub[i] + input_base ; 
+            carry_bit = -1 ;
+        
+        }
+        
+        
+        i++; 
+        n1=n1/10; 
+        n2=n2/10;
+        larger/=10 ; 
+    }
+    
+    //cout<<carry_bit ; 
+    while(i>0)
+    {
+        cout<<Sub[i-1] ;
+        i--; 
+    }
+    
+    return 0;
+}
