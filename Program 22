@@ -1,0 +1,51 @@
+/******************************************************************************
+Any bit addition 
+
+*******************************************************************************/
+
+#include <iostream>
+#include<cmath> 
+using namespace std;
+
+int main()
+{
+    int carry_bit = 0 , Sum[100] , i=0 , n1 = 342 , n2 = 444 , input_base = 5 , larger = n1 ; 
+    
+    if(n2>n1)
+    {
+        larger = n2; 
+    }
+     
+    while( larger > 0 )
+    {
+        
+        int a1 = n1 % 10 , a2 = n2 % 10 ;
+        
+        Sum[i] = a1 + a2  + carry_bit ;  
+        
+        carry_bit = 0 ; 
+        
+        if(a1+a2 >= input_base )
+        {
+               
+            Sum[i] = Sum[i] - input_base ; 
+            carry_bit = 1 ;
+        
+        }
+        
+        
+        i++; 
+        n1=n1/10; 
+        n2=n2/10;
+        larger/=10 ; 
+    }
+    
+    cout<<carry_bit ; 
+    while(i>0)
+    {
+        cout<<Sum[i-1] ;
+        i--; 
+    }
+    
+    return 0;
+}
