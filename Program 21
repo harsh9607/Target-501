@@ -1,0 +1,44 @@
+/******************************************************************************
+BASE  2  to  BASE 3 
+( 1010 ) to ( 101 )
+*******************************************************************************/
+
+#include <iostream>
+#include<cmath> 
+using namespace std;
+
+int main()
+{
+    int base_2 = 1010 , base_3_rev[100]  , base_10 = 0 , i =0  ; 
+    
+    // base 2 to base 10 
+    
+    while(base_2 > 0 )
+    {
+        base_10 = base_10 +  (base_2 % 10)  * pow(2,i);  
+    
+        i++ ; 
+        
+        base_2 /= 10 ;  
+    }
+    
+    cout<< base_10 << endl ;
+    i=0 ; 
+    
+    // base 3 from base 10 
+    while(base_10 > 0)
+    {
+        base_3_rev[i] = base_10 % 3 ; 
+        base_10 = base_10 / 3 ;
+        i++;
+        
+    }
+    
+    while(i >  0 )
+    {
+        cout<<base_3_rev[i-1] ;
+        i--; 
+    }
+    
+    return 0;
+}
