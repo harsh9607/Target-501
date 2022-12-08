@@ -1,0 +1,55 @@
+// any base ( <10) mutiplication
+#include <iostream>
+#include<cmath> 
+using namespace std ;
+
+int convert_to_b10(int x , int base )
+{
+    int ans = 0 , p = 0  ; 
+    
+    while(x>0)
+    {
+        ans = ans +  pow(base , p ) * (x%10)  ; 
+        x = x / 10 ;
+        p++;
+    }
+    
+    return ans ; 
+}
+
+int convert_to_base(int x , int base)
+{   
+    int ans = 0 , A[10] , ctr = 0 , mul_fact = 1 ;
+    while(x>0 )
+    {
+        A[ctr] = x % base ; 
+        x = x / base; 
+        ctr++;
+    }
+    
+    int k = 0 ;
+    
+    while(k<ctr)
+    {
+        ans = ans + A[k] * mul_fact ;
+        mul_fact *= 10 ; 
+        k++;
+    }
+    
+    return ans; 
+    
+}
+int main() {
+
+int n1 = 21 , n2 = 17 , base = 8  ; 
+// STEP 1 : Convert to base 10 
+int n1_10 = convert_to_b10(n1,base); 
+int n2_10 = convert_to_b10(n2,base);
+// STEP 2 : Multiply it 
+int product = n1_10 * n2_10 ; 
+// STEP 3 : Convert to Octal 
+int product_8 = convert_to_base(product , base);
+cout<<"There product equals : "<<product_8;
+
+return 0;
+}
