@@ -1,0 +1,23 @@
+// Find Index of an Element
+#include <iostream>
+#include<cmath>
+#include<climits>
+using namespace std; 
+
+int main() {
+    
+    int n=7 ; 
+    int A[n] = { 1,2,4,15,26,15,83}; 
+    int FindMyIndex = 15 ; 
+    
+    for(int i = 0 ; i < sizeof(A)/sizeof(A[0]); i++)
+    {
+        if(A[i] == FindMyIndex)
+        {
+            cout<<"Its at Index = "<<i<<endl; 
+        }
+    }
+  
+  
+    return 0;
+}
