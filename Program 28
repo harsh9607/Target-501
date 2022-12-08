@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int A[5] = {0,0,9,9,9};
+    
+    int B[7] = {1,1,1,1,9,9,9}; 
+    
+    int Sum[8] = {0} , j=0 ;
+ 
+    int size_A = 5 , size_B = 7 , k=0 ;
+    while(size_A > 0 )
+    {
+        
+        Sum[k] = Sum[k] + A[size_A-1] + B[size_B-1];
+        
+        if(Sum[k]>9)
+        {
+            Sum[k] = Sum[k] % 10 ;
+            Sum[k+1] = 1;
+        }
+        
+        
+        size_A--;
+        size_B--;
+        k++; 
+        
+    }
+    
+    while(size_B > 0)
+    {
+        Sum[k]= Sum[k] + B[size_B-1]; 
+        if(Sum[k]>9)
+        {
+            Sum[k] = Sum[k] % 10 ;
+            Sum[k+1] = 1;
+        }
+        size_B--;
+        k++;
+        
+    }
+    //cout<<"K ="<<k;
+    k++; 
+    while(k>0)
+    {
+        cout<<Sum[k-1];
+        k--;
+    
+    }
+    return 0;
+}
