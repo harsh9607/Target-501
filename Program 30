@@ -1,0 +1,39 @@
+// Introduction to stacks in stl 
+/*
+
+Stack Functions 
+
+empty()
+top()
+push(g)
+pop()
+size() 
+
+*/
+
+#include<iostream>
+#include<stack> 
+using namespace std; 
+int main()
+{
+    
+    stack<int> My_Stack;
+    My_Stack.push(1); 
+    My_Stack.push(2); 
+    My_Stack.push(3);
+    My_Stack.push(4);
+    My_Stack.push(5);
+    My_Stack.push(70);
+    
+    
+   
+    cout<<My_Stack.size()<<endl;
+
+    
+    while(!My_Stack.empty())
+    {
+        cout<<My_Stack.top()<<endl; 
+        My_Stack.pop();
+    }
+    
+}
