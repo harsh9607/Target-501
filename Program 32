@@ -1,0 +1,138 @@
+/******************************************************************************
+
+FINDING IF MATHEMATICAL EXPRESSION IS BALANCED OR NOT WRT BRACKETS IT CONTAINS.
+((a+b)+d) -> true
+))a+b((   -> false
+(a+b] -> fasle
+*******************************************************************************/
+#include <iostream>
+#include<stack> 
+
+using namespace std;
+
+int  check_brackets(stack<char> s)
+{
+    int flag = 0 ,b=0, a=0, a2=0 , b2=0 ; 
+    stack<char> dummy , s2 = s  ; 
+    while( ! s.empty())
+    {
+        if(s.top() == '(' )
+        {
+            a++; 
+        }
+        
+        else if(s.top()== '[')
+        {
+            b++; 
+        }
+        
+        else if(s.top() == ']' )
+        {
+            b2++; 
+        }
+        
+        else if(s.top() == ')')
+        {
+            a2++; 
+        }
+    
+        s.pop();
+    }
+    if(a==a2 && b==b2)
+    {
+        flag = 1 ; 
+    }
+    
+    return flag ;
+}
+
+
+void BB(stack<char> s)
+{   int flag = 0; 
+    stack<char> dummy; 
+    while(! s.empty())
+    {
+        if(s.top() == ')' || s.top()==']')
+        {
+            dummy.push(s.top());
+            
+        }
+        
+        else if (s.top() == '(' )
+        {
+            if((!dummy.empty()) && dummy.top() == ')')
+            {
+                if(!dummy.empty())
+                dummy.pop();
+            }
+            
+            else
+            {
+                //cout<<"NOT BALANCED\n" ; 
+                flag = -1 ; 
+                break; 
+            }
+        }
+        
+         else if (s.top() == '[' )
+        {
+            if((!dummy.empty()) && dummy.top() == ']')
+            {   
+                if(!dummy.empty())
+                dummy.pop();
+            }
+            
+            else
+            {
+                //cout<<"NOT BALANCED\n" ; 
+                flag = -1 ; 
+                break; 
+            }
+        }
+        
+        
+        if(!s.empty())
+        {
+            s.pop();
+        }
+    }
+    
+    if(flag ==0)
+    {
+        cout<<"BALANCED EQUALTION";
+    }
+    
+    else
+    {
+        cout<<"NOT BALANCED\n";
+    }
+   
+}
+
+int main()
+{
+    stack<char> s1 ; 
+    s1.push(')');
+    s1.push(']');
+    s1.push('a');
+    s1.push('+');
+    s1.push('b');
+    s1.push('(');
+    s1.push('[');
+    
+int x =   check_brackets(s1); 
+    
+    if(x==0)
+    {
+        cout<<"NOT BALANCED";
+        
+    }
+    
+    else
+    {
+        BB(s1);
+       
+    }
+    
+    return 0;
+}
