@@ -1,0 +1,99 @@
+/******************************************************************************
+Detection of bracket duplicacy using stacks
+*******************************************************************************/
+#include <iostream>
+#include<stack>
+
+using namespace std;
+
+void is_duplicate(stack<char> My_Stack)
+{
+    stack<char> Dummy;
+    int flag = 1  ;//  1 means no duplicate
+    
+    while(!My_Stack.empty())
+    {
+        
+        Dummy.push(My_Stack.top()); 
+        My_Stack.pop(); 
+        
+        if(Dummy.top()=='(')
+        { 
+            Dummy.pop();
+                if(Dummy.top()==')')
+                {
+                    flag = 0 ;
+                }
+            
+            while(Dummy.top() != ')')
+            {
+                Dummy.pop();
+            }
+            Dummy.pop();
+        }
+        
+        
+    }
+    
+    if(flag == 1 )
+    {
+        cout<<"No Duplicate\n";
+    }
+    
+    else
+    {
+        cout<<"Duplicate\n";
+    }
+}
+
+int main ()
+{
+
+  stack < char >My_Stack, My_Stack2, My_Stack3;
+  // ((a+b))+((c=d))
+  My_Stack.push ('(');
+  My_Stack.push ('(');
+  My_Stack.push ('a');
+  My_Stack.push ('+');
+  My_Stack.push ('b');
+  My_Stack.push (')');
+  My_Stack.push ('+');
+  My_Stack.push('(');
+  My_Stack.push('c');
+  My_Stack.push('+');
+  My_Stack.push('d');
+  My_Stack.push(')');
+  My_Stack.push(')');
+
+// (a+b)+ ((c+d))
+  My_Stack2.push ('(');
+  My_Stack2.push ('a');
+  My_Stack2.push ('+');
+  My_Stack2.push ('b');
+  My_Stack2.push (')');
+  My_Stack2.push ('(');
+  My_Stack2.push ('(');
+  My_Stack2.push('c');
+  My_Stack2.push('+');
+  My_Stack2.push('d');
+  My_Stack2.push(')');
+  My_Stack2.push(')');
+
+// (((a+b)))
+
+  My_Stack3.push ('(');
+  My_Stack3.push ('(');
+  My_Stack3.push ('(');
+  My_Stack3.push ('b');
+  My_Stack3.push ('+');
+  My_Stack3.push ('a');
+  My_Stack3.push (')');
+  My_Stack3.push(')');
+  My_Stack3.push(')');
+
+is_duplicate(My_Stack) ;
+is_duplicate(My_Stack2);
+is_duplicate(My_Stack3);
+
+  return 0;
+}
