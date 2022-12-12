@@ -1,0 +1,42 @@
+/******************************************************************************
+Finding the greatest next right most neighbour in O(n)
+*******************************************************************************/
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+
+    int A[] = { 2,5,9,3,1,12,6,8,7} ;
+    int size_A = sizeof(A)/ sizeof(A[0]) ; 
+    
+    int i=0, j=1; 
+    while( i< size_A - 1) 
+    {
+        if(A[j] - A[i] > 0)
+        { 
+             cout<<"For the value "<<A[i]<<" = "<<A[j]<<endl;
+            i++; 
+            j=i; 
+            
+        }
+        
+        if(A[j]-A[i]<=0)
+        {
+          
+            j++;
+        }
+        
+        if(j == size_A)
+        {
+           
+             cout<<"For the value"<<A[i]<<" = "<<-1<<endl;
+             i++;
+             j=i;
+        }
+        
+    }
+    cout<<"For the value"<<A[i]<<" = "<<-1;
+    return 0;
+}
