@@ -1,0 +1,125 @@
+/******************************************************************************
+PROBLEM : STACK 
+*******************************************************************************/
+#include <iostream>
+#include<stack>
+using namespace std;
+
+int main ()
+{
+  int A[] = { 2, 4, 6, 1, 3, 2, 3, 4, 7, 2, 2 };
+  
+  stack < int >stack, index;
+  
+  int size_A = sizeof (A) / sizeof (A[0]);
+  
+  int Left_Smallest[size_A] ={0}, Right_Smallest[size_A] ={0} ;
+  
+  int maxvalue = 0 ; 
+  
+  // Movement to Left 
+  for(int i=0 ; i<size_A ; i++)
+  {
+    
+    if(stack.empty())
+    {
+      stack.push(A[i]);
+      index.push(i); 
+      Left_Smallest[i] = -1; 
+      
+    }
+    
+    else
+    {
+        
+        while((!stack.empty()) && A[i] < stack.top()   )
+        {   if(!stack.empty())
+            {stack.pop();
+            index.pop();} 
+        }
+    
+        if(stack.empty())
+        {
+             stack.push(A[i]);
+             index.push(i); 
+            Left_Smallest[i] = -1; 
+        }
+        
+        else
+        {
+             
+             Left_Smallest[i] = index.top();
+             stack.push(A[i]); 
+             index.push(i);
+             
+        }
+    }
+  }
+  
+  // empty stack for reuse
+  while(!stack.empty())
+  {
+      stack.pop();
+      index.pop(); 
+  }
+  
+  // For right Movement
+  
+  for(int i=size_A-1 ; i>=0 ; i--)
+  {
+    
+    if(stack.empty())
+    {
+      stack.push(A[i]);
+      index.push(i); 
+      Right_Smallest[i] = size_A ; 
+      
+    }
+    
+    else
+    {
+        
+        while((!stack.empty()) && A[i] <= stack.top()   )
+        {   if(!stack.empty())
+            {stack.pop();
+            index.pop();} 
+        }
+    
+        if(stack.empty())
+        {
+           
+              stack.push(A[i]);
+              index.push(i); 
+              Right_Smallest[i] = size_A;
+        }
+        
+        else
+        {
+              Right_Smallest[i] = index.top();
+              stack.push(A[i]); 
+              index.push(i);
+             
+        }
+    }
+  }
+  
+    for(int i=0 ; i<size_A;i++)
+    {
+        cout<<"Right boundary ="<<Right_Smallest[i]<<" & Left boundary " <<Left_Smallest[i]<<endl;
+    }
+ 
+    for(int i=0 ; i<size_A ; i++)
+    {
+        int width = Right_Smallest[i] - Left_Smallest[i] - 1;
+        cout<<"Width : "<<width<<endl;
+        int x =  A[i] * width; 
+        cout<<"X = "<<x<<endl;
+        if( x> maxvalue)
+        {
+            maxvalue = x; 
+        }
+    }
+
+cout<<"MAX AREA OF HISTORGAM IS ="<<maxvalue;
+  return 0;
+}
