@@ -1,0 +1,52 @@
+/******************************************************************************
+PROBLEM : STOCK SPAN 
+*******************************************************************************/
+#include <iostream>
+#include<stack>
+using namespace std;
+
+int
+main ()
+{
+  int A[] = { 2, 4, 6, 1, 3, 2, 3, 4, 7, 1, 2 };
+  stack < int >stack, index;
+  int size_A = sizeof (A) / sizeof (A[0]);
+  int k = 0;
+
+  for (int i = 0; i < size_A; i++)
+    {
+      if (stack.empty ())
+	    {
+
+	  cout << "Stock span for " << A[i] << " is = " << i + 1 << endl;
+	  stack.push (A[i]);
+	  index.push (i);
+	    }
+
+      else
+	    {
+
+	  while ((!stack.empty ()) && A[i] >= stack.top ())
+	    {
+	      stack.pop ();
+	      index.pop ();
+	    }
+
+	  if (stack.empty ())
+	    {
+	      cout << "Stock span for " << A[i] << " is = " << i + 1 << endl;
+	      stack.push (A[i]);
+	      index.push (i);
+	    }
+
+	  else
+	    {
+	    cout<<"Stock span for "<<A[i]<<" is = "<<i - index.top()<<endl;
+	    stack.push(A[i]);
+	    index.push(i); 
+	    }
+	}
+
+ }
+  return 0;
+}
