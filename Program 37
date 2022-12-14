@@ -1,0 +1,109 @@
+/******************************************************************************
+INFIX EXPRESSION EVALUATION 
+
+*******************************************************************************/
+#include<stack>
+#include <iostream>
+using namespace std;
+
+int operation(int a , int b , char c)
+{   int ans=0;
+    
+    if(c == '*')
+    {
+        ans = a*b;
+    }
+    if(c == '+')
+    {
+        ans = a+b;
+    }
+    if(c == '/')
+    {
+        ans = b/a;
+    }
+    if(c == '-')
+    {
+        ans = b-a;
+    }
+return ans;
+    
+}
+
+int precedence(char ch)
+{
+    if(ch == '+' || ch == '-')
+    {return 1;}
+    if(ch == '/' || ch == '*')
+    {return 2;}
+    if(ch== ')')
+    {return 3;}
+    else
+    {
+    return -1;
+    }
+}
+
+int main()
+{
+    stack<int> Operand; 
+    stack<char> Operator;
+    char A[] = { '(', '2', '+','(','5','-','3','*','6','+','2',')',')'};
+    
+    for(int i=0 ; i<sizeof(A)/sizeof(A[0]) ; i++ )
+    {
+        if(A[i] == '(')
+        {
+            Operator.push(A[i]); 
+        }
+        
+        else
+        {
+            if(precedence(A[i]) < 0)
+            {
+                Operand.push(A[i]); 
+            }
+            else
+            {
+                if(A[i] == ')')
+                {
+                    while(Operator.top()!= '(' )
+                    {
+                        int x =int(Operand.top()) - 48 ;
+                        Operand.pop();
+                        int y = int(Operand.top()) - 48 ; 
+                        Operand.pop();
+                        int z = Operator.top(); 
+                        Operator.pop();
+                        Operand.push(char(operation(x,y,z)+ 48));
+                    }
+                    Operator.pop(); 
+                }
+                
+                else{
+                        if( Operator.empty() || precedence(A[i]) >= precedence(Operator.top()) )
+                        {
+                            Operator.push(A[i]);
+                        }
+                        else
+                        {    
+                             while( precedence(A[i]) <= precedence(Operator.top()))
+                             {
+                              int x =int(Operand.top()) - 48 ;
+                              Operand.pop();
+                              int y = int(Operand.top()) - 48 ; 
+                              Operand.pop();
+                              char z = Operator.top(); 
+                              Operator.pop();
+                              Operand.push(char(operation(x,y,z)+ 48));
+                              
+                            }
+                            Operator.push(A[i]);
+                        }
+                    }
+            }
+        }
+    }
+    cout<<"The final value is = "<<char(Operand.top()) - 48 ; 
+    
+    return 0;
+}
