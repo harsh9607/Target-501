@@ -1,0 +1,140 @@
+/************************************
+PREFIX CONVERSION ( just tweaked Postfix  wala code a little )
+*************************************/
+#include <iostream>
+#include<string>
+#include<cstring>
+#include<stack> 
+using namespace std;
+
+int precedence(char ch)
+{
+    int ans=0; 
+    if(ch=='+' || ch =='-')
+    {
+        ans = 1;
+    }
+    else if(ch=='*' || ch=='/')
+    {
+        ans =2;
+    }
+    else if(ch=='(')
+    {ans = 3;}
+    else
+    {
+        ans = -1; 
+    }
+
+    return ans; 
+}
+
+int precedence(string ch)
+{
+   
+    int ans=0; 
+    if(ch=="+" || ch =="-")
+    {
+        ans = 1;
+    }
+    else if(ch=="*" || ch=="/")
+    {
+        ans =2;
+    }
+    else if(ch=="(")
+    {ans = 0;}
+    else
+    {
+        ans = -1; 
+    }
+
+    return ans; 
+}
+
+
+
+int main()
+{
+     
+    string s; 
+    stack<string> Postfix , Operator; 
+    
+    cout<<"Enter the infix  string :" ;
+    cin>>s; 
+    
+    
+   for (int i=0 ; i<s.length(); i++ )
+   {
+        if( s[i] == '(' )
+        {
+            //string e = strcpy(s[i], ""); 
+            string s1="";
+            s1.append(1,s[i]);
+            Operator.push(s1) ; 
+        }
+        
+        else
+        {   // If its a number simply push into Postfix stack 
+            if( precedence(s[i]) < 0 && s[i]!=')')
+            {
+                string s1="";
+                s1.append(1,s[i]);
+                Postfix.push(s1); 
+            }
+            // If it is not a number then its either operator or ')' right parenthesis
+            else
+            {   // If it is an operator of Higher precedence then simply push it
+                if(precedence(s[i]) > precedence(Operator.top()) )
+                {
+                    string x ="";
+                    x.append(1,s[i]);
+                    Operator.push(x); 
+                }
+                // Else Pop it depending on conditions
+                else
+                {
+                    if(s[i] == ')')
+                    {
+                        while(Operator.top()!="(")
+                        {
+                           string v2 = Postfix.top();
+                           Postfix.pop(); 
+                           string v1 = Postfix.top();
+                           Postfix.pop(); 
+                           string op = Operator.top(); 
+                           Operator.pop(); 
+                           string temp ="";
+                           temp = op+v1+v2;
+                           Postfix.push(temp); 
+                        }
+                        Operator.pop();    
+                    }
+                    
+                    else
+                    {
+                     
+                     while(precedence(s[i]) <= precedence(Operator.top()))
+                     {
+                           string v2 = Postfix.top();
+                           Postfix.pop(); 
+                           string v1 = Postfix.top();
+                           Postfix.pop(); 
+                           string op = Operator.top(); 
+                           Operator.pop(); 
+                            string temp ="";
+                           temp = op+v1+v2;
+                           Postfix.push(temp); 
+                     }
+                     string temp1 ="";
+                     temp1.append(1,s[i]);
+                     Operator.push(temp1);
+                    }
+                }
+            }
+        }
+         
+    }
+    
+    
+cout<<Postfix.top(); 
+    return 0;
+}
