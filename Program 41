@@ -1,0 +1,132 @@
+/******************************************************************************
+MERGE OVERLAPPING INTERVALS
+INPUT
+6
+100 230
+150 500
+200 700
+1 23
+40 70
+701 1000
+OUTPUT 
+1 & 23
+40 & 70
+100 & 700
+701 & 1000
+*******************************************************************************/
+#include <iostream>
+#include<stack> 
+#include <bits/stdc++.h>
+#include <unordered_map>
+
+
+using namespace std;
+
+int main()
+{   
+    
+    int n ,i,j; 
+    unordered_map<int, int> umap , amap;
+    
+    cout<<"ENTER VALUE OF N :";
+    cin>> n ;
+    int A[n][2];
+    stack<int> stack , answer_stack;
+    // INPUT BEGINS 
+    for(int i=0 ; i<n ; i++) {
+        cin>>A[i][0]>>A[i][1]; 
+        umap[A[i][0]] = A[i][1]; 
+    }
+    // INPUT ENDS
+    
+    // SORTING BEGINS 
+   for(int i=0 ; i<n-1 ; i++)
+   {
+       for(int j=i+1; j<n ; j++)
+       {
+           if(A[i][0] < A[j][0] )
+           {
+               int temp = A[j][0]; 
+               A[j][0] = A[i][0]; 
+               A[i][0] = temp;
+           }
+       }
+   }
+   
+   
+   
+    for(int i=0 ; i<n ; i++) {
+    A[i][1] = umap[A[i][0]];  
+    }
+    // SORTING ENDS 
+    
+   
+    // STACK MEH UDEL RHE HAI Bhai
+     for(int i=0 ; i<n ; i++) {
+        stack.push(A[i][0]);  
+    }
+    
+    while(!stack.empty())
+    {
+        int L1 , L2 ; 
+        
+        L1 = stack.top(); 
+        stack.pop(); 
+        
+        if(stack.empty())
+        {   amap[L1] = umap[L1]; 
+            answer_stack.push(L1); 
+            break; 
+        }
+        
+        L2 = stack.top(); 
+        stack.pop(); 
+         
+        
+        if(L2 > umap[L1])
+        {
+            // merge nhi ho sakta 
+            amap[L1] = umap[L1]; 
+            answer_stack.push(L1);
+            stack.push(L2); 
+        }
+        
+        else
+        {
+            // agar merge ho sakta hai then what ? 
+            // then we must find the right end..right? =P 
+            if(umap[L1] > umap[L2])
+            {
+                umap[L1] = umap[L1]; 
+                stack.push(L1); 
+            }
+            
+            else
+            {
+                umap[L1] = umap[L2];
+                stack.push(L1);
+            }
+        }
+    }
+    
+    
+    
+    // PRINTING VALUES 
+    while(!answer_stack.empty())
+    {  /*
+        cout<<answer_stack.top()<<" & "<<amap[answer_stack.top()]<<endl; 
+        answer_stack.pop();
+        */
+        
+        stack.push(answer_stack.top());
+        answer_stack.pop();
+    }
+    while(!stack.empty())
+    {  
+        cout<<stack.top()<<" & "<<amap[stack.top()]<<endl; 
+        stack.pop();
+    }
+
+        
+    return 0;
+}
