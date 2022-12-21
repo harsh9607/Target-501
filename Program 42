@@ -1,0 +1,71 @@
+/******************************************************************************
+SMALLEST NUMBER FOLLOWING PATTERN  like dddiddid is 432176598
+d - decrease in value from previous value
+i - increase in value from previous value
+*******************************************************************************/
+#include <iostream>
+#include <stack>
+#include<cstring> 
+
+using namespace std;
+
+int main()
+{
+    // dddiddid = 4321   765 98
+    stack<int> stack , pattern; 
+    string temp = "" , ans= "";    
+    stack.push(9);
+    stack.push(8);
+    stack.push(7);
+    stack.push(6);
+    stack.push(5);
+    stack.push(4);
+    stack.push(3);
+    stack.push(2);
+    stack.push(1);
+    
+    char A[10] ; 
+    
+    cout<<"Enter  the god damn pattern pls "; 
+    cin>>A; 
+    
+    int sz= 0 ;
+    for(int i=0 ; A[i]!='\0';i++)
+    {
+        pattern.push(A[i]); 
+        
+        if(pattern.top() == 'i')
+        {
+            while(!pattern.empty())
+            {
+                temp = to_string(stack.top()) + temp; 
+                stack.pop();
+                pattern.pop();
+                
+            }
+        
+            ans = ans + temp ; 
+            temp = ""; 
+        }
+        
+    }
+    
+    if(!stack.empty()){
+    while(!stack.empty())
+        {
+        temp = to_string(stack.top()) + temp; 
+        stack.pop();
+        pattern.pop();
+        }
+    //    temp = to_string(stack.top()) + temp; 
+        ans = ans + temp ; 
+        temp = ""; 
+    }
+    
+    cout<<ans<<endl;
+    
+    
+
+
+    return 0;
+}
