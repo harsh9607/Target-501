@@ -1,0 +1,44 @@
+// FINDING MIN OF AN ARRAY IN O(n)
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <stack>
+using namespace std;
+
+
+int main() {
+    
+    stack<int> stack , min;
+    int n;
+    cout<<"How many elements will be entered "; 
+    cin>>n; 
+    
+    for(int i=0 ; i<n ;i++){
+        int a ;
+        cin>>a;
+        // When program starts and both stacks are empty
+        
+        if(stack.empty() && min.empty())
+        {
+            stack.push(a);
+            min.push(a);
+        }
+        
+        else
+        {
+            stack.push(a);
+            if(a<=min.top())
+            {
+                min.push(a);
+            }
+        }
+        
+    }
+    
+    cout<<"Min value is : "<<min.top(); 
+    
+    
+    return 0;
+}
