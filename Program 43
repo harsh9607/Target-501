@@ -1,0 +1,76 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <stack>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    long long int x,i ; 
+    stack<long long int> s1,s2; 
+    cin>>x;
+    for(i=0 ; i<x ; i++)
+    {
+        int ch , flag=0; 
+        cin>>ch; 
+        switch(ch){
+            
+            case 1: unsigned long long int a ; 
+                    cin>>a; 
+                    if(s1.empty() && s2.empty()){
+                    
+                        s2.push(a);
+                    }
+                    
+                    else{
+                        s1.push(a);
+                        }
+                    break;
+                     
+            case 2 : 
+                    if(s2.empty()){
+                     
+                        while(!s1.empty())
+                        {
+                            s2.push(s1.top());
+                            s1.pop();
+                            
+                        }
+                        
+                        if(!s2.empty())
+                         { s2.pop(); }
+                         
+                    }
+                    
+                    else
+                    {
+                        if(!s2.empty())
+                          s2.pop();
+                        
+                    }
+                     
+                     break;
+                      
+            case 3 : if(!s2.empty()){
+                     cout<<s2.top()<<endl;
+                    }
+                    else
+                    {   
+                        while(!s1.empty())
+                        {
+                            s2.push(s1.top());
+                            s1.pop();
+                            
+                        }
+                        
+                        cout<<s2.top()<<endl;
+                        
+                    }
+                     break; 
+        }
+    }    
+    return 0;
+}
