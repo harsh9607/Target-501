@@ -1,0 +1,184 @@
+#include <bits/stdc++.h>
+#include<algorithm>
+
+using namespace std;
+
+string ltrim(const string &);
+string rtrim(const string &);
+vector<string> split(const string &);
+
+/*
+ * Complete the 'equalStacks' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER_ARRAY h1
+ *  2. INTEGER_ARRAY h2
+ *  3. INTEGER_ARRAY h3
+ */
+
+long long int addition(std::vector<long long int> vector){
+    
+    std::vector<long long int> ::iterator it; 
+    
+    long long int i=0 ; 
+    for(it=vector.begin() ;it!= vector.end() ;  ++it)
+    {
+        i = i + *it ;     
+    }
+    
+    return i; 
+}
+
+long long int equalStacks(vector<long long int> h1, vector<long long int> h2, vector<long long int> h3) {
+
+       static long long int max_height =0 , h1_height , h2_height , h3_height ;
+       h1_height = addition(h1); 
+       h2_height = addition(h2);
+       h3_height = addition(h3); 
+       
+       if( (h1_height == h2_height) && ( h2_height == h3_height))
+       {
+           max_height = h1_height; 
+       }
+       
+       else
+       {    // While all stacks not of equal height
+          while(!((h1_height == h2_height) && ( h2_height == h3_height)) )
+           {
+               
+              
+               if( (h1_height >= h2_height) && (h1_height >= h3_height) )
+               {
+                   vector<long long int>::iterator it = h1.begin(); 
+                   h1_height = h1_height - *it;
+                   h1.erase(it); 
+               }
+               
+               else if( (h2_height >= h1_height) && (h2_height >= h3_height) ) {
+                   
+                    vector<long long int>::iterator it = h2.begin(); 
+                    h2_height = h2_height - *it;
+                    h2.erase(it); 
+                   
+               }
+               
+               else if( (h3_height >= h1_height) && (h3_height >= h2_height) ) {
+                   
+                    vector<long long int>::iterator it = h3.begin(); 
+                    h3_height = h3_height - *it;
+                    h3.erase(it); 
+                   
+               }
+               
+           }
+           max_height = h1_height; 
+       }
+     
+       
+     return max_height;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string first_multiple_input_temp;
+    getline(cin, first_multiple_input_temp);
+
+    vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
+
+  long long   int n1 = stoi(first_multiple_input[0]);
+
+  long long  int n2 = stoi(first_multiple_input[1]);
+
+  long long  int n3 = stoi(first_multiple_input[2]);
+
+    string h1_temp_temp;
+    getline(cin, h1_temp_temp);
+
+    vector<string> h1_temp = split(rtrim(h1_temp_temp));
+
+    vector<long long int> h1(n1);
+
+    for (int i = 0; i < n1; i++) {
+        int h1_item = stoi(h1_temp[i]);
+
+        h1[i] = h1_item;
+    }
+
+    string h2_temp_temp;
+    getline(cin, h2_temp_temp);
+
+    vector<string> h2_temp = split(rtrim(h2_temp_temp));
+
+    vector<long long int> h2(n2);
+
+    for (int i = 0; i < n2; i++) {
+        int h2_item = stoi(h2_temp[i]);
+
+        h2[i] = h2_item;
+    }
+
+    string h3_temp_temp;
+    getline(cin, h3_temp_temp);
+
+    vector<string> h3_temp = split(rtrim(h3_temp_temp));
+
+    vector<long long int> h3(n3);
+
+    for (int i = 0; i < n3; i++) {
+        int h3_item = stoi(h3_temp[i]);
+
+        h3[i] = h3_item;
+    }
+
+  long long   int result = equalStacks(h1, h2, h3);
+
+    fout << result << "\n";
+    
+    cout<<result<<endl;
+
+    fout.close();
+
+    return 0;
+}
+
+string ltrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
+
+    return s;
+}
+
+string rtrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}
+
+vector<string> split(const string &str) {
+    vector<string> tokens;
+
+    string::size_type start = 0;
+    string::size_type end = 0;
+
+    while ((end = str.find(" ", start)) != string::npos) {
+        tokens.push_back(str.substr(start, end - start));
+
+        start = end + 1;
+    }
+
+    tokens.push_back(str.substr(start));
+
+    return tokens;
+}
