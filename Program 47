@@ -1,0 +1,19 @@
+// Pointers study
+
+#include<iostream>
+using namespace std;
+
+
+int main()
+{
+    int x = 5 ; 
+    int *p = &x;
+    int **q , *r; 
+    r = p ;
+    q =  &r ;
+    cout<<"Address of x "<<&x<<endl;
+    cout<< "For R r :"<<r <<" & *r :"<<*r<<endl ;
+    cout<< "For Q q :"<<q <<" & *q :"<<*q<<endl ; 
+    cout<< "For P p :"<<p <<" & *p :"<<*p<<endl ;
+    return 0 ;
+}
