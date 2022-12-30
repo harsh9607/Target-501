@@ -1,0 +1,57 @@
+// Linked List
+#include<iostream>
+
+using namespace std;
+
+struct link
+{
+    int data;
+    link* next;
+
+};
+
+class LinkedList
+{
+public :
+    link* first;
+    link* last;
+    int size;
+
+    LinkedList() : first(NULL) , last(NULL), size(0)
+    {   }
+    void additem(int d);
+    void display();
+
+};
+
+void LinkedList::additem(int d)
+{
+    link* newlink = new link;
+    newlink->data = d;
+    newlink->next = first;
+    first = newlink;
+    size++; 
+}
+
+void LinkedList::display()
+{
+    link* current = first ; 
+    while(current!=NULL)
+    {
+     cout<<"Data is : "<<current->data<<endl ;  
+     current = current->next; 
+    }
+}
+
+int main()
+{
+
+    LinkedList l1;
+    l1.additem(25);
+    l1.additem(32);
+    l1.additem(49);
+    l1.additem(64);
+    l1.display();
+
+     return 0 ;
+}
