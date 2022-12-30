@@ -9,7 +9,7 @@ int main()
     int x = 5 ; 
     int *p = &x;
     int **q , *r; 
-    r = p ;
+    r = p ; // same as writing r  = & x
     q =  &r ;
     cout<<"Address of x "<<&x<<endl;
     cout<< "For R r :"<<r <<" & *r :"<<*r<<endl ;
@@ -17,3 +17,12 @@ int main()
     cout<< "For P p :"<<p <<" & *p :"<<*p<<endl ;
     return 0 ;
 }
+
+
+/* output
+Address of x 0x7ffedfddfd9c
+For R r :0x7ffedfddfd9c & *r :5
+For Q q :0x7ffedfddfda0 & *q :0x7ffedfddfd9c & **q is 5
+For P p :0x7ffedfddfd9c & *p :5
+
+*/
