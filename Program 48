@@ -1,0 +1,76 @@
+/******************************************************************************
+ LINEAR TRAVERSAL OF LINKED LIST 
+*******************************************************************************/
+#include <iostream>
+using namespace std;
+
+struct link
+{
+    int data;
+    link* next; 
+}; 
+
+class linkedList{
+    
+    private: link*  first ;
+             link*   second;  
+             int size; 
+    
+    public: 
+    linkedList(): first(NULL) , second(NULL) , size(0)
+    {   }
+    void addItem(int d);
+    void display(); 
+};
+
+
+void linkedList::addItem(int d)
+{
+    link* temp = new link ;
+    if(first == NULL)
+    {
+        temp->data = d; 
+        temp->next = second ; 
+        first = temp; 
+        second = temp ; 
+        size++; 
+        
+    }
+    
+    else
+    {   
+        temp->data = d; 
+        temp->next = NULL;  
+        second->next = temp; 
+        second = temp;
+        size++; 
+        
+    }
+
+};
+
+void linkedList::display()
+{
+    link* temp1 = first ;
+    while(temp1 != NULL)
+    {
+        cout<<temp1->data<<endl; 
+        temp1 = temp1->next ;
+    }
+}
+
+
+
+int main()
+{
+    linkedList l1; 
+    l1.addItem(5);
+    l1.addItem(3);
+    l1.addItem(33);
+    l1.addItem(7);
+    
+    l1.display();
+    
+
+    return 0;
+}
