@@ -1,0 +1,185 @@
+/******************************************************************************
+ Linked Lists -> Deletion at any index.
+*******************************************************************************/
+#include <iostream>
+#define LOG(x) cout<<"Size = "<<x<<endl; 
+using namespace std;
+
+struct link
+{
+    int data;
+    link* next; 
+}; 
+
+class linkedList{
+    
+    private: link*  first ;
+             link*   second;  
+             int size; 
+    
+    public: 
+    linkedList(): first(NULL) , second(NULL) , size(0)
+    {   }
+    void addItem(int d);
+    void display(); 
+    void showSize(); 
+    void remove_element_from_head();
+    void delete_specific_node(int index);
+};
+
+// ADDING ITEM to linkedList
+
+void linkedList::addItem(int d=0)
+{
+    link* temp = new link ;
+    if(first == NULL)
+    {
+        temp->data = d; 
+        temp->next = second ; 
+        first = temp; 
+        second = temp ; 
+        size++; 
+        
+    }
+    
+    else
+    {   
+        temp->data = d; 
+        temp->next = NULL;  
+        second->next = temp; 
+        second = temp;
+        size++; 
+        
+    }
+
+};
+
+// SIZE OF linkedList
+
+void linkedList::showSize()
+{
+    LOG(size); 
+}
+
+
+
+// Show Elements 
+
+void linkedList::display()
+{
+    link* temp1 = first ;
+    while(temp1 != NULL)
+    {
+        cout<<temp1->data<<endl; 
+        temp1 = temp1->next ;
+    }
+}
+
+// Remove element from head
+
+void linkedList::remove_element_from_head()
+{
+    link* temp = first ; 
+    if(size == 0)
+    {
+        cout<<"Cannot delete from empty list\n";
+        
+    }
+    else if(size==1)
+    {
+        int x = first->data;
+        first = NULL;
+        second = NULL; 
+        size--;
+        delete temp; 
+        cout<<"Item "<<x<<" deleted successfully\n";
+    }
+    
+    else
+    {   int x = first->data; 
+        first = temp->next; 
+        delete temp; 
+        size--;         
+        cout<<"Item "<<x<<" deleted successfully\n"; 
+        
+    }
+}
+
+// DELETE SPECIFIC POINTER
+void linkedList::delete_specific_node( int index)
+{
+    int i=1;
+    
+    link* temp  = first;
+    link* temp2 ;  
+    if(index > size)
+    {
+        cout<<"INVALID INDEX\n"; 
+    }
+    //  temp --> temp2 <del>  ---> other nodes
+
+    else{
+        // deleting the 1st element 
+        if(index == 1 )
+        {
+            first = temp->next;
+            // same as first = first-> next as temp & first point same value
+            delete temp; 
+            size--;
+        }
+        
+        //deleting the last element
+        else if(index == size)
+        {   int i=1; 
+            
+            while(i<size-1)
+            {
+                temp=temp->next; 
+                i++;
+                
+            }
+            temp2 = temp->next; 
+            second = temp ;
+            temp->next = NULL;
+            delete temp2; 
+            size--; 
+        }
+        
+        // deleting any element from the middle 
+        else{
+            while(i<index-1)
+            {
+            temp=temp->next;
+            i++; 
+            }
+        
+            temp2 = temp->next; 
+            temp->next = temp2->next; 
+            delete temp2; 
+            size-- ;
+        }
+        
+    }
+}
+
+
+
+//  MAIN FUNCTION 
+
+int main()
+{
+    linkedList l1; 
+    l1.addItem(5);
+    l1.addItem(3);
+    l1.addItem(33);
+    l1.addItem(7);
+    l1.addItem();
+    
+    l1.display();
+    cout<<"Now deleting the value at index 2\n";
+    l1.delete_specific_node(5);
+    l1.display();
+    
+
+    return 0;
+}
