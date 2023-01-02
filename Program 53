@@ -1,0 +1,126 @@
+/******************************************************************************
+Linked list : Find kth element from back without using size or size-k-1 loop
+*******************************************************************************/
+#include <iostream>
+#include <stack> 
+using namespace std;
+
+class link{
+    public:
+    int data; 
+    link* next;
+}; 
+
+class LinkedList{
+  private: link* head; 
+           link* tail;
+           int size; 
+  public: 
+         LinkedList(): head(nullptr),tail(nullptr),size(0)
+         {}
+         // Status - Done 
+         void display()
+         {
+            // link* temp = new link;
+            link* temp = head; 
+             while(temp!=nullptr)
+             {
+                 cout<<temp->data<<endl;
+                 temp = temp->next; 
+             }
+         }
+         
+         // Queue ADAPTER : Push status - done 
+         void push(int d)
+         {
+             
+             link* temp = new link ;
+             
+             temp->data = d ;   
+             
+             if(size == 0 )
+             {
+                 head = temp; 
+                 tail = temp;
+                 temp->next = nullptr;
+             }
+             
+             else
+             {
+             
+             temp->next = nullptr ; 
+             tail->next = temp; 
+             tail = temp; 
+            
+             }
+             size++; 
+             
+         } 
+         // Done 
+         void top()
+         {cout<<head->data<<endl;}
+         
+         void pop(){
+             
+             link* temp = head; 
+             
+             if(size == 0 )
+             cout<<"EMPTY LIST ! CANNOT POP\n"; 
+             
+             else
+             {
+                      
+             head = head->next;
+             delete temp; 
+             size--; 
+             }
+            
+         }
+         
+         void K_th_element(int k)
+         {
+             // To find Kth element from the back end of LL 
+             // Slow and fast pointer
+             link* slow = head ; 
+             link* fast = head ;
+             int i=0; 
+             
+             // say k = 2 ie 2nd element 
+             //  15       14        13    >>12<<       11     10 
+             //  sf 
+             //  s  <gap of k>      f
+             //           s                  f
+             //                     s                  f
+             //                             s                  f
+             // when fast reaches the last element slow is at the required node
+             
+             while(i<k)
+             {
+                 fast = fast->next; 
+                 i++; 
+             }
+             // Now leys maintain that difference b/w s and f
+             while(fast->next!=nullptr)
+             {
+                 fast = fast->next; 
+                 slow = slow->next; 
+                 
+             }
+             
+             cout<<"The Kth element is : "<<slow->data<<endl; 
+         }
+         
+           
+};
+
+
+
+int main()
+{
+    LinkedList l1; 
+    l1.push(5);l1.push(4);l1.push(3);l1.push(2);l1.push(1);
+    
+    l1.display();
+    l1.K_th_element(0);
+    return 0;
+}
