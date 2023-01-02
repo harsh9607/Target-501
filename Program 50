@@ -1,0 +1,87 @@
+/******************************************************************************
+Reverse a linked list : Data iterative manner
+*******************************************************************************/
+#include <iostream>
+#include <stack> 
+using namespace std;
+
+class link{
+    public:
+    int data; 
+    link* next;
+}; 
+
+class LinkedList{
+  private: link* head; 
+           link* tail; 
+           int size; 
+  public: 
+         LinkedList(): head(nullptr),tail(nullptr),size(0)
+         {}
+         void display()
+         {
+            // link* temp = new link;
+            link* temp = head; 
+             while(temp!=nullptr)
+             {
+                 cout<<temp->data<<endl;
+                 temp = temp->next; 
+             }
+         }
+         void addItem(int d)
+         {
+             link* temp = new link ;
+             
+             temp->data = d ;   
+             
+             if(size == 0 )
+             {
+                 
+                 temp->next = nullptr; 
+                 head = temp; 
+                 tail = temp; 
+                 size++ ;
+             }
+             
+             
+             else
+             {  temp->next = nullptr; 
+                tail->next = temp;
+                tail = temp ;
+                size++;
+             }
+         }
+    
+            void data_reverse();
+};
+ void LinkedList::data_reverse()
+ {
+    stack<int> stack ;  
+    link* front_traveller = head ; 
+    while(front_traveller!= nullptr)
+    {
+        stack.push(front_traveller->data);
+        front_traveller = front_traveller->next; 
+    }
+    front_traveller = head; 
+    while(front_traveller!= nullptr)
+    {
+        front_traveller->data = stack.top();
+        stack.pop();
+        front_traveller = front_traveller->next;
+    }
+    
+ }
+
+int main()
+{
+    LinkedList l1; 
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(3);
+    l1.addItem(4);
+    l1.display();
+    l1.data_reverse();
+    l1.display();
+    return 0;
+}
