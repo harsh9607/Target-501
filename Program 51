@@ -1,0 +1,108 @@
+/******************************************************************************
+Reverse a linked list : Link iterative manner
+*******************************************************************************/
+#include <iostream>
+#include <stack> 
+using namespace std;
+
+class link{
+    public:
+    int data; 
+    link* next;
+}; 
+
+class LinkedList{
+  private: link* head; 
+           link* tail; 
+           int size; 
+  public: 
+         LinkedList(): head(nullptr),tail(nullptr),size(0)
+         {}
+         void display()
+         {
+            // link* temp = new link;
+            link* temp = head; 
+             while(temp!=nullptr)
+             {
+                 cout<<temp->data<<endl;
+                 temp = temp->next; 
+             }
+         }
+         void addItem(int d)
+         {
+             link* temp = new link ;
+             
+             temp->data = d ;   
+             
+             if(size == 0 )
+             {
+                 
+                 temp->next = nullptr; 
+                 head = temp; 
+                 tail = temp; 
+                 size++ ;
+             }
+             
+             
+             else
+             {  temp->next = nullptr; 
+                tail->next = temp;
+                tail = temp ;
+                size++;
+             }
+         }
+    
+            void link_reverse();
+};
+
+ void LinkedList::link_reverse()
+ {
+    if(size==0)
+    {
+        cout<<"NO LIST TO REVERSE\n";
+    }
+    else if(size==1)
+    {
+        cout<<"LIST REVERSED SUCCESSFULLY\n"; 
+    }
+    else if(size==2)
+    {
+        tail->next   = head; 
+        head->next   = nullptr;
+        link* temp = head ;
+        head = tail; 
+        tail = temp; 
+    }
+    else
+    {
+        link* prev = nullptr; 
+        link*cur   = head;
+        link*fwd = nullptr;
+        
+        while(cur!=nullptr)
+        {   
+            fwd = cur->next;  
+            cur->next  = prev ;
+            prev = cur ;
+            cur = fwd; 
+        }
+        
+        link*temp = head; 
+        head = prev;
+        tail = temp ;
+        
+    }
+ }
+
+int main()
+{
+    LinkedList l1; 
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(3);
+    l1.addItem(4);
+    l1.display();
+    l1.link_reverse();
+    l1.display();
+    return 0;
+}
