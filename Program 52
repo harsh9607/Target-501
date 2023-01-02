@@ -1,0 +1,81 @@
+/******************************************************************************
+Linked list to stack adapter
+*******************************************************************************/
+#include <iostream>
+#include <stack> 
+using namespace std;
+
+class link{
+    public:
+    int data; 
+    link* next;
+}; 
+
+class LinkedList{
+  private: link* head; 
+           link* tail;
+           int size; 
+  public: 
+         LinkedList(): head(nullptr),tail(nullptr),size(0)
+         {}
+         void display()
+         {
+            // link* temp = new link;
+            link* temp = head; 
+             while(temp!=nullptr)
+             {
+                 cout<<temp->data<<endl;
+                 temp = temp->next; 
+             }
+         }
+         
+         // STACK ADAPTER
+         void push(int d)
+         {
+             link* temp = new link ;
+             
+             temp->data = d ;   
+             
+             temp->next = head; 
+             
+             head = temp; 
+             
+             size++; 
+             
+         } 
+         
+         void top()
+         {cout<<head->data<<endl;}
+         
+         void pop(){
+             
+             link* temp = head; 
+             
+             if(size == 0 )
+             cout<<"EMPTY LIST ! CANNOT POP\n"; 
+             
+             else
+             {
+                      
+             head = head->next;
+             delete temp; 
+             size--; 
+             }
+            
+         }
+           
+};
+
+
+
+int main()
+{
+    LinkedList l1; 
+    l1.push(5);l1.push(4);l1.push(3);l1.push(2);l1.push(1);
+    
+    l1.display();
+    l1.top();
+    l1.pop();
+    l1.top();   
+    return 0;
+}
