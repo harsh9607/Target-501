@@ -1,0 +1,81 @@
+/******************************************************************************
+Middle element of Linked List
+*******************************************************************************/
+#include <iostream>
+
+using namespace std;
+
+struct link
+{
+    int data; 
+    link* next; 
+};
+
+class LinkedList
+{
+    public : link* head ;
+             link* tail;
+             int size;
+             LinkedList():head(NULL),tail(NULL),size(0)
+             { }
+             
+             void additem(int d)
+             {
+                link* temp  = new link ; 
+                temp->data  = d;
+                 
+                if(size ==0 )
+                {
+                    temp->next = NULL;
+                    head = temp; 
+                    tail = temp; 
+                    size++ ;
+                }
+                
+                else
+                {   temp-> next = NULL ;
+                    tail->next = temp ; 
+                    tail = temp ; 
+                    size++;
+                }
+             }
+             
+             void display()
+             {
+                 link* temp = head ; 
+                 while(temp!=NULL)
+                 {
+                     cout<<temp->data<<"\n";
+                 }
+             }
+
+            void middle()
+            {
+                link* f;
+                link* s;
+                f=head;
+                s=head;
+                while(f->next!=NULL && f->next->next!=NULL)
+                {
+                    f=f->next;
+                    f=f->next;
+                    s=s->next;
+                }
+                
+                cout<<"Middle element ="<<s->data<<endl;
+            }
+            
+};
+
+int main()
+{
+    LinkedList l1;
+    l1.additem(1);   
+    l1.additem(2);
+    l1.additem(3);   
+    l1.additem(4);
+    l1.additem(5);   
+   // l1.additem(6);
+    l1.middle();
+    return 0;
+}
