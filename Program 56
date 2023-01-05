@@ -1,0 +1,111 @@
+/***********
+ MergeSort 
+************/
+
+#include <iostream>
+using namespace std;
+void Display(int A[], int x );
+void Mergesort(int A1[] , int x , int);
+void Merge(int A[] ,int a, int b , int c);
+
+void Merge(int A[], int s , int mid , int e )
+{
+    // temp arrarys 
+    int len1 = mid - s + 1 ;
+    int len2 = e  - mid ;
+    
+    
+    int *B = new int[len1]; 
+    int *C = new int[len2];
+
+    // Copy values into Temporary Arrays
+    for(int i=0 ; i<len1 ;i++)
+    {
+        
+        B[i] = A[s+i];    
+        
+    }
+    
+    for(int i=0 ; i<len2 ; i++) 
+    {
+        C[i] =  A[ mid+ 1 +i ];  
+        
+    }
+    
+    
+    // Now sorting into a bigger array
+    int i=s , j=0 , k=0;
+    while(j<len1 && k<len2)
+    {
+        if(B[j]<C[k])
+        {
+            A[i]=B[j];
+            i++;
+            j++;
+        }
+        else
+        {
+            A[i] = C[k] ;
+            i++; 
+            k++;
+        }
+        
+    }
+    if(j<len1)
+    {
+        while(j<len1)
+        {
+            A[i] = B[j];
+            j++;i++;
+        }
+    }
+    if(k<len2)
+    {
+        while(k<len2)
+        {
+            A[i] = C[k];
+            i++; 
+            k++;
+        }
+    }
+}
+
+void Mergesort(int A[] , int s, int e )
+{
+   if(s<e){
+    int mid = s + ((e-s)/2) ;
+    
+    Mergesort(A,s,mid);
+    Mergesort(A,mid+1,e);
+    
+    Merge(A,s,mid,e);
+       
+   }
+    else
+    {return;}
+
+}
+void Display(int A[] , int x)
+{
+    
+    for(int i=0 ; i<x ; i++)
+    {
+        cout<<A[i]<<"  "; 
+    }
+}
+
+
+
+
+int main()
+{
+    int A[] = {10,9,8,7,6};
+    int x = sizeof(A)/sizeof(A[0]);
+    int s = 0 , end = x-1; 
+    Mergesort(A,s,end);
+    Display(A,x);
+    
+    return 0;
+}
+
+
