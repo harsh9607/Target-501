@@ -1,0 +1,149 @@
+/******************************************************************************
+KergeSort on Linked List
+*******************************************************************************/
+#include <iostream>
+
+using namespace std;
+
+struct link
+{
+    int data;
+    link* next;
+};
+
+class LinkedList
+{
+public: link* head;
+      link* tail;
+      int size;
+      LinkedList() :head(NULL), tail(NULL), size(0)
+      { }
+
+      void additem(int d)
+      {
+          link* temp = new link;
+          temp->data = d;
+
+          if (size == 0)
+          {
+              temp->next = NULL;
+              head = temp;
+              tail = temp;
+              size++;
+          }
+
+          else
+          {
+              temp->next = NULL;
+              tail->next = temp;
+              tail = temp;
+              size++;
+          }
+      }
+
+      void display()
+      {
+          link* temp = head;
+          while (temp != NULL)
+          {
+              cout << temp->data << "  ";
+              temp = temp->next;
+          }
+          cout << endl;
+      }
+
+
+      link* middle(link* head, link* tail)
+      {
+          link* f;
+          link* s;
+          f = head;
+          s = head;
+
+          while (f != tail && f->next != tail)
+          {
+              f = f->next;
+              f = f->next;
+              s = s->next;
+          }
+
+
+          return s;
+          //cout<<"Middle element ="<<s->data<<endl;
+      }
+      LinkedList MergeSort(  link* head, link* tail);
+
+      LinkedList Merge(LinkedList B, LinkedList C);
+};
+
+LinkedList LinkedList::MergeSort( link* head, link* tail) {
+
+
+    if (head==tail) {
+        LinkedList D;
+        D.additem(head->data);
+        return D;
+    }
+    
+
+    link* mid = middle(head, tail);
+    link* mid2 = mid->next;
+    LinkedList B = MergeSort(head, mid);
+    LinkedList C = MergeSort(mid2, tail);
+    LinkedList D = Merge(B, C);
+
+
+
+    return D; 
+}
+
+LinkedList LinkedList::Merge(LinkedList B, LinkedList C )
+{
+    LinkedList A ;
+    
+    link* temp_B = B.head;
+    link* temp_C = C.head;
+
+    while (temp_B != NULL && temp_C != NULL) {
+    
+        if (temp_B->data < temp_C->data) {
+            A.additem(temp_B->data);
+            temp_B = temp_B->next;
+        }
+        else
+        {
+            A.additem(temp_C->data);
+            temp_C = temp_C->next;
+        }
+
+    }
+    while (temp_B != NULL)
+    { 
+        A.additem(temp_B->data);
+        temp_B = temp_B->next;
+
+    }
+    
+    while (temp_C != NULL)
+    {
+        A.additem(temp_C->data);
+        temp_C = temp_C->next;
+    }
+
+    return A;
+}
+
+int main()
+{
+    LinkedList l1,l2;
+    l1.additem(10);
+    l1.additem(2);
+    l1.additem(3);
+    l1.additem(1);
+    l1.additem(5);
+    l1.additem(6);
+
+    l2 = l1.MergeSort( l1.head, l1.tail);
+    l2.display();
+    return 0;
+}
