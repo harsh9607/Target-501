@@ -46,6 +46,7 @@ class LinkedList
                  while(temp!=NULL)
                  {
                      cout<<temp->data<<"\n";
+                     temp = temp->next;
                  }
              }
 
