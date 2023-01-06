@@ -56,7 +56,7 @@ class LinkedList
                 link* s;
                 f=head;
                 s=head;
-                while(f->next!=NULL && f->next->next!=NULL)
+                while(f!=tail && f->next!=tail)
                 {
                     f=f->next;
                     f=f->next;
