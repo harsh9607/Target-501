@@ -1,0 +1,184 @@
+/******************************************************************************
+Odd Even seperator in a Linked list
+*******************************************************************************/
+#include <iostream>
+using namespace std;
+
+struct link {
+
+    int data;
+    link* next;
+};
+
+class LinkedList {
+
+public: link* head;
+      link* tail;
+      int size;
+      LinkedList() : head(NULL), tail(NULL), size(0)
+      {};
+
+      // functions 
+      void display()
+      {
+          link* temp = head;
+          while (temp != tail->next)
+          {
+              cout << temp->data << "\t";
+              temp = temp->next;
+          }
+
+      }
+
+      void addItem(int d)
+      {
+          link* temp = new link;
+          temp->data = d;
+          if (size == 0)
+          {
+              temp->next = NULL;
+              head = temp;
+              tail = temp;
+              size++;
+          }
+          else
+          {
+              temp->next = NULL;
+              tail->next = temp;
+              tail = temp;
+              size++;
+          }
+      }
+      int is_odd(int d)
+      {
+          if (d % 2 == 0)
+          {
+              return 0;
+          }
+          else
+          {
+              return 1;
+          }
+      }
+
+      int is_even(int d)
+      {
+          if (d % 2 == 0)
+          {
+              return 1;
+          }
+          else
+          {
+              return 0;
+          }
+      }
+
+
+      void Odd_Even_Sep();
+      void remove_dup();
+
+};
+
+// Removing Duplicates from Sorted Linked List
+void LinkedList::remove_dup()
+{
+    link* temp = head;
+    link* temp2;
+    while (temp != NULL)
+    {
+        temp2 = temp;
+        temp = temp->next;
+        if (temp->data == temp2->data)
+        {
+
+            if (temp == tail)
+            {
+                temp2->next = temp->next;
+                temp = NULL;
+                tail = temp2;
+            }
+
+            else
+            {
+                temp2->next = temp->next;
+                temp = temp2->next;
+            }
+
+        }
+    }
+}
+
+void LinkedList::Odd_Even_Sep()
+{
+    link* e1 = head;
+    link* e2 = head->next;
+
+    while (e2 != NULL)
+    {
+        if (is_odd(e1->data) && is_odd(e2->data))
+        {
+            e2 = e2->next;
+            e1 = e1->next;
+            cout << "Cond 1 e1 = " << e1->data << " e2 = " << e2->data << endl;
+
+        }
+        else if (is_odd(e1->data) && is_even(e2->data))
+        {
+            e1 = e1->next;
+            e2 = e2->next;
+            cout << "e1 = " << e1->data << " e2 = " << e2->data << endl;
+        }
+        else if (is_even(e1->data) && is_even(e2->data))
+        {
+            e2 = e2->next;
+            cout << "e1 = " << e1->data << " e2 = " << e2->data << endl;
+        }
+        else if (e2!=NULL && is_even(e1->data) && is_odd(e2->data))
+        {
+            if (e2 == NULL)
+            {
+                break;
+            }
+            link* odd = e1; 
+
+            while (e1 != e2)
+            {
+                int temp = e2->data;
+                cout << "Temp = " << temp<<endl; 
+                e2->data = e1->data;
+                cout << "e2->data " << e2->data << endl;
+                e1->data = temp;
+                cout << "e1->data = " << e1->data << endl;
+                e1 = e1->next;
+                display();
+                cout << endl;
+            }
+
+            e1 = odd->next; 
+        }
+
+        else
+        {
+            cout << "Unhandled condition !";
+        }
+    }
+
+}
+
+int main()
+{
+    LinkedList l1;
+    l1.addItem(1);
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(2);
+    l1.addItem(4);
+    l1.addItem(53);
+    l1.addItem(5);
+    l1.addItem(36);
+    l1.display();
+    cout << endl;
+    l1.Odd_Even_Sep();
+    l1.display();
+    return 0;
+}
