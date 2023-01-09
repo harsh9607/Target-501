@@ -1,0 +1,163 @@
+/******************************************************************************
+ Linked list Manipulation
+*******************************************************************************/
+#include <iostream>
+using namespace std;
+
+struct link {
+
+    int data;
+    link* next;
+};
+
+class LinkedList {
+
+public: link* head;
+      link* tail;
+      int size;
+      LinkedList() : head(NULL), tail(NULL), size(0)
+      {};
+
+      // functions 
+      void display()
+      {
+          link* temp = head;
+          while (temp != tail->next)
+          {
+              cout << temp->data << "\t";
+              temp = temp->next;
+          }
+
+      }
+
+      void addItem(int d)
+      {
+          link* temp = new link;
+          temp->data = d;
+          if (size == 0)
+          {
+              temp->next = NULL;
+              head = temp;
+              tail = temp;
+              size++;
+          }
+          else
+          {
+              temp->next = NULL;
+              tail->next = temp;
+              tail = temp;
+              size++;
+          }
+      }
+      int is_odd(int d)
+      {
+          if (d % 2 == 0)
+          {
+              return 0;
+          }
+          else
+          {
+              return 1;
+          }
+      }
+
+      int is_even(int d)
+      {
+          if (d % 2 == 0)
+          {
+              return 1;
+          }
+          else
+          {
+              return 0;
+          }
+      }
+
+
+      void Odd_Even_Sep();
+      void remove_dup();
+
+};
+
+// Removing Duplicates from Sorted Linked List
+void LinkedList::remove_dup()
+{
+    link* temp = head;
+    link* temp2;
+    while (temp != NULL)
+    {
+        temp2 = temp;
+        temp = temp->next;
+        if (temp->data == temp2->data)
+        {
+
+            if (temp == tail)
+            {
+                temp2->next = temp->next;
+                temp = NULL;
+                tail = temp2;
+            }
+
+            else
+            {
+                temp2->next = temp->next;
+                temp = temp2->next;
+            }
+
+        }
+    }
+}
+
+void LinkedList::Odd_Even_Sep()
+{
+    link* e1 = head;
+    link* e2 = e1;
+
+    while (e2!=NULL)
+    {
+        /**/
+        if (e1->next != NULL)
+        {
+            e2 = e2->next;
+          
+
+        }
+
+        if (e1->next != NULL)
+        {
+            e2 = e2->next;
+           
+        }
+        if (e2 != NULL) {
+            int temp = e2->data;
+            e2->data = e1->data;
+            e1->data = temp;
+            e1 = e2->next;
+            e2 = e1;
+           
+            cout << endl;
+        }
+      
+
+    }
+
+
+}
+
+int main()
+{
+    LinkedList l1;
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(3);
+    l1.addItem(4);
+    l1.addItem(5);
+    l1.addItem(6);
+    l1.addItem(7);
+    l1.addItem(8);
+    l1.display();
+    cout << endl;
+    l1.Odd_Even_Sep();
+    l1.display();
+    return 0;
+}
