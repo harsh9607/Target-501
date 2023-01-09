@@ -1,0 +1,101 @@
+/******************************************************************************
+Remove duplicates from a Linked List
+*******************************************************************************/
+#include <iostream>
+using namespace std;
+
+struct link{
+    
+    int data; 
+    link* next; 
+};
+
+class LinkedList{
+  
+  public: link* head ;
+          link* tail ; 
+          int size;             
+  LinkedList(): head(NULL) , tail(NULL), size(0) 
+  {};
+
+// functions 
+    void display()
+    {
+        link* temp = head; 
+        while(temp!=tail->next)
+        {
+            cout<<temp->data<<"\t"; 
+            temp = temp->next; 
+        }
+        
+    }
+
+    void addItem(int d)
+    {
+        link*temp = new link; 
+        temp->data = d; 
+        if(size==0)
+        {   temp->next = NULL; 
+            head  = temp; 
+            tail  = temp; 
+            size++;
+        }
+        else
+        {
+            temp->next = NULL; 
+            tail->next = temp; 
+            tail = temp; 
+            size++;
+        }
+    }
+    
+    void remove_dup();
+
+};
+
+// Removing Duplicates from Sorted Linked List
+void LinkedList::remove_dup()
+{
+    link* temp = head;
+    link* temp2;
+    while(temp!=NULL)
+    {   
+        temp2 = temp; 
+        temp = temp->next; 
+        if(temp->data == temp2->data )
+        {  
+        
+            if(temp==tail)
+            {
+                temp2->next = temp->next;
+                temp = NULL;
+                tail = temp2;
+            }
+            
+            else
+            {
+                temp2->next = temp->next;
+                temp = temp2->next;
+            }
+            
+        }
+    }
+}
+
+
+int main()
+{
+    LinkedList l1; 
+    l1.addItem(1);
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(2);
+    l1.addItem(4);
+    l1.addItem(5);
+    l1.addItem(5);
+    l1.display();
+    cout<<endl;
+    l1.remove_dup();
+    l1.display();
+    return 0;
+}
