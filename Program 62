@@ -1,0 +1,159 @@
+/******************************************************************************
+LL Rev display via recursion
+*******************************************************************************/
+#include <iostream>
+using namespace std;
+struct link
+{
+    int data;
+    link* next;
+};
+
+class LinkedList
+{
+    link* head;
+    link* tail;
+    int size;
+
+public:   LinkedList() : head(NULL), tail(NULL), size(0)
+{   };
+
+      link* get_head()
+      {
+          return head;
+      }
+
+      void addItem(int d)
+      {
+          link* temp = new link;
+          temp->data = d;
+          if (size == 0)
+          {
+              temp->next = NULL;
+              head = temp;
+              tail = temp;
+              size++;
+          }
+
+          else
+          {
+              temp->next = NULL;
+              tail->next = temp;
+              tail = temp;
+              size++;
+
+          }
+      }
+
+      void display()
+      {
+          link* temp = head;
+          while (temp != tail->next)
+          {
+              cout << temp->data << "\t";
+              temp = temp->next;
+          }
+      }
+
+
+      void reverse_print(link* head)
+      {
+          link* temp = head;
+          if (temp == tail)
+          {
+              cout << temp->data << "\t";
+              return;
+          }
+
+          else
+          {
+              reverse_print(temp->next);
+              cout << temp->data << "\t";
+          }
+      }
+
+      void recursive_reverse(link* h, link* pre)
+      {
+          link* cur = h;
+          link* prev = pre;
+          if (cur == tail)
+          {
+              cur->next = prev;
+              link* temp = head;
+              head = tail;
+              tail = temp;
+              return;
+          }
+          else
+          {
+
+              recursive_reverse(cur->next, cur);
+              cur->next = prev;
+
+          }
+
+      }
+
+      void reverse_LL()
+      {
+          if (size == 0)
+          {
+              cout << "Cannot reverse the list";
+          }
+          else if (size == 1)
+          {
+              cout << "Link is already reversed";
+          }
+          else if (size == 2)
+          {
+              head->next = NULL;
+              tail->next = head;
+              link* temp = head;
+              head = tail;
+              tail = temp;
+
+          }
+
+
+          else
+          {
+              link* cur = head;
+              link* prev = NULL;
+              link* fwd = NULL;
+              while (cur != NULL)
+              {
+                  fwd = cur->next;
+                  cur->next = prev;
+                  prev = cur;
+                  cur = fwd;
+
+              }
+
+              link* temp = head;
+              head = tail;
+              tail = temp;
+
+
+          }
+      }
+
+};
+
+
+
+
+
+int main()
+{
+    LinkedList l1;
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(3);
+    l1.addItem(4);
+    l1.addItem(5);
+    l1.display();
+    cout << endl;
+    l1.recursive_reverse(l1.get_head(), NULL);
+    l1.display();
+    return 0;
+}
