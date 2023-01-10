@@ -1,0 +1,89 @@
+/******************************************************************************
+LL Rev display via recursion 
+*******************************************************************************/
+#include <iostream>
+using namespace std;
+struct link
+{
+  int data; 
+  link* next; 
+};
+
+class LinkedList
+{
+  public: link*head; 
+          link*tail; 
+          int size; 
+        
+        LinkedList() : head(NULL) , tail(NULL),size(0)
+         {   };
+        
+        void addItem(int d)
+        {
+            link*temp = new link; 
+            temp->data = d; 
+            if(size==0)
+            {
+                temp->next = NULL; 
+                head = temp;
+                tail = temp;
+                size++;
+            }
+            
+            else
+            {
+                temp->next = NULL; 
+                tail->next = temp;
+                tail = temp ;
+                size++;
+                
+            }
+        }
+            
+        void display()
+        {
+            link*temp = head;
+            while(temp!=tail->next)
+            {
+                cout<<temp->data<<"\t";
+                temp = temp->next; 
+            }
+        }
+        
+        
+        void reverse_print(link * head)
+        {
+            link* temp=head ;
+            if(temp==tail)
+            {
+                cout<<temp->data<<"\t";
+                return; 
+            }
+            
+            else
+            {
+                reverse_print(temp->next); 
+                cout<<temp->data<<"\t";
+            }
+        }
+    
+};
+
+
+
+
+
+int main()
+{
+    LinkedList l1; 
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(3);
+    l1.addItem(4);
+    l1.addItem(5);
+    l1.display();
+    cout<<endl;
+    l1.reverse_print(l1.head);
+
+    return 0;
+}
