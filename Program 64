@@ -1,0 +1,106 @@
+// Reverse Linked List by data recursion
+#include <iostream>
+#include<queue>
+using namespace std;
+struct link
+{
+    int data;
+    link* next;
+};
+
+class LinkedList
+{
+    link* head;
+    link* tail;
+    int size;
+
+public:   LinkedList() : head(NULL), tail(NULL), size(0)
+{   };
+
+      link* get_head()
+      {
+          return head;
+      }
+
+      void addItem(int d)
+      {
+          link* temp = new link;
+          temp->data = d;
+          if (size == 0)
+          {
+              temp->next = NULL;
+              head = temp;
+              tail = temp;
+              size++;
+          }
+
+          else
+          {
+              temp->next = NULL;
+              tail->next = temp;
+              tail = temp;
+              size++;
+
+          }
+      }
+
+      void display()
+      {
+          link* temp = head;
+          while (temp != tail->next)
+          {
+              cout << temp->data << "\t";
+              temp = temp->next;
+          }
+      }
+
+
+
+      // NOTE : & sign is important else Queue is passed by Value
+      // But we need call by reference as we want Q to change
+      
+      void reverse_data_recursive(link*h , queue<int> &Q)
+      {
+          link* temp = h;
+
+          if (temp == tail)
+          { 
+              Q.push(temp->data); 
+              temp->data = Q.front();
+              Q.pop();
+             return;
+          }
+
+          else
+          {
+              Q.push(temp->data);
+              reverse_data_recursive(temp->next , Q);
+              temp->data = Q.front();
+              Q.pop();
+
+          }
+      }
+
+
+};
+
+
+
+
+
+int main()
+{
+    LinkedList l1;
+    queue<int> Q1;
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(3);
+    l1.addItem(4);
+    l1.addItem(5);
+    l1.display();
+    cout << endl;
+    l1.reverse_data_recursive(l1.get_head(), Q1);
+
+    l1.display();
+    return 0;
+}
