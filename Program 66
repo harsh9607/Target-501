@@ -96,8 +96,8 @@ public: link* head;
           int flag = 1;
           link* s, * f;
           s = head;
-          f = head->next;
-          while (s != f)
+          f = head;
+          do
           {
               if (f != NULL)
                   f = f->next;
@@ -113,7 +113,7 @@ public: link* head;
                   break;
               }
 
-          }
+          } while (s != f);
           if (flag == 1)
               cout << "LOOP DETECTED";
 
