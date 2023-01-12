@@ -1,0 +1,163 @@
+/*
+Loop removal from a linked list
+*/
+#include <iostream>
+#include<map>
+using namespace std;
+
+struct link {
+
+    link* next;
+    int data;
+};
+
+class LinkedList
+{
+public: link* head;
+      link* tail;
+      int size;
+
+      LinkedList() : head(NULL), tail(NULL), size(0)
+      {}
+
+      void display()
+      {
+
+          link* temp = head;
+          while (temp != NULL)
+          {
+              cout << temp->data << "\t";
+              temp = temp->next;
+          }
+
+      }
+
+      void addItem(int d)
+      {
+          link* temp = new link;
+          temp->data = d;
+          if (size == 0)
+          {
+              temp->next = NULL;
+              tail = temp;
+              head = temp;
+              size++;
+          }
+
+          else
+          {
+              temp->next = NULL;
+              tail->next = temp;
+              tail = temp;
+              size++;
+
+          }
+      }
+
+      void loop_creator()
+      {
+          tail->next = head->next->next->next;
+      }
+
+      bool LoopDetection_via_hashmaps()
+      {
+          if (head == NULL)
+          {
+              cout << "NO LIST";
+              return 0;
+          }
+
+          else
+          {
+              map<link*, bool> visited;
+              link* temp = head;
+              while (temp != NULL)
+              {
+                  if (visited[temp])
+                  {
+                      cout << "LOOP DETECTED";
+                      return 1;
+                  }
+
+                  visited[temp] = true;
+                  temp = temp->next;
+
+
+
+              }
+          }
+          cout << "NO LOOP";
+          return 0;
+      }
+
+
+      link* Floyd_algo()
+      {
+          int flag = 1;
+          link* s, * f;
+          s = head;
+          f = head;
+          do
+          {
+              if (f != NULL)
+                  f = f->next;
+              if (f != NULL)
+                  f = f->next;
+              if (s != NULL)
+                  s = s->next;
+
+              if (f == NULL)
+              {
+                  cout << "NO LOOP";
+                  flag = 0;
+                  break;
+              }
+
+          } while (s != f);
+          
+          if (flag == 1)
+              cout << "LOOP DETECTED";
+
+          s = head;
+          while (s != f) {
+              s = s->next;
+              f = f->next;
+          }
+
+          return s;
+
+      }
+      void Loop_removal()
+      {
+          link* slow = Floyd_algo();
+          link* fast = slow; 
+          while(fast->next!=slow)
+              {
+              fast = fast->next;
+              }
+          fast->next = NULL; 
+          cout << "\nLOOP SUCESSFULLY REMOVED\n";
+      }
+
+};
+
+int main()
+{
+
+    LinkedList l1;
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(3);
+    l1.addItem(4);
+    l1.addItem(5);
+    l1.addItem(6);
+    l1.loop_creator();
+    //l1.display();
+    //l1.LoopDetection_via_hashmaps();
+    link*x =  l1.Floyd_algo();
+    cout << "\nthey meet at address " << x <<" at value "<<x->data<<endl;
+    cout<<"\nLoop Removal program started !";
+    l1.Loop_removal();
+    l1.display();
+    return 0;
+}
