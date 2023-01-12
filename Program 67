@@ -1,5 +1,5 @@
 /*
-Loop removal from a linked list
+Floyd algo tofind loops
 */
 #include <iostream>
 #include<map>
@@ -116,29 +116,39 @@ public: link* head;
           } while (s != f);
           
           if (flag == 1)
+          {
               cout << "LOOP DETECTED";
+              s = head;
 
-          s = head;
-          while (s != f) {
-              s = s->next;
-              f = f->next;
+          // Loop detection at which node ? it starts here
+          // Note to self : for Logic revision see love babbars youtube video. 
+              while (s != f) {
+                  s = s->next;
+                  f = f->next;
+              }
+              return s;
           }
-
-          return s;
+          return NULL;
 
       }
       void Loop_removal()
       {
           link* slow = Floyd_algo();
-          link* fast = slow; 
-          while(fast->next!=slow)
+          if (slow != NULL) {
+              link* fast = slow;
+              while (fast->next != slow)
               {
-              fast = fast->next;
+                  fast = fast->next;
               }
-          fast->next = NULL; 
-          cout << "\nLOOP SUCESSFULLY REMOVED\n";
-      }
+              fast->next = NULL;
+              cout << "\nLOOP SUCESSFULLY REMOVED\n";
 
+          }
+          else
+          {
+              cout << "\nNO LOOP TO BE REMOVED\n";
+          }
+      }
 };
 
 int main()
@@ -155,8 +165,8 @@ int main()
     //l1.display();
     //l1.LoopDetection_via_hashmaps();
     link*x =  l1.Floyd_algo();
-    cout << "\nthey meet at address " << x <<" at value "<<x->data<<endl;
-    cout<<"\nLoop Removal program started !";
+    //cout << "\nthey meet at address " << x <<" at value "<<x->data<<endl;
+    //cout<<"\nLoop Removal program started !";
     l1.Loop_removal();
     l1.display();
     return 0;
