@@ -91,7 +91,7 @@ public: link* head;
       }
 
 
-      void Floyd_algo()
+      link* Floyd_algo()
       {
           int flag = 1;
           link* s, * f;
@@ -114,10 +114,17 @@ public: link* head;
               }
 
           } while (s != f);
+          
           if (flag == 1)
               cout << "LOOP DETECTED";
 
+          s = head;
+          while (s != f) {
+              s = s->next;
+              f = f->next;
+          }
 
+          return s;
 
       }
 
@@ -136,7 +143,7 @@ int main()
     l1.loop_creator();
     //l1.display();
     //l1.LoopDetection_via_hashmaps();
-    l1.Floyd_algo();
-
+    link*x =  l1.Floyd_algo();
+    cout << "\nthey meet at address " << x <<" at value "<<x->data;
     return 0;
 }
