@@ -1,0 +1,125 @@
+/*
+Palindrome - Linked List - Without Queue
+*/
+#include <iostream>
+using namespace std;
+
+struct link {
+
+    link* next;
+    int data;
+};
+
+class LinkedList
+{
+public: link* head;
+      link* tail;
+      int size;
+
+      LinkedList() : head(NULL), tail(NULL), size(0)
+      {}
+
+      void display()
+      {
+
+          link* temp = head;
+          while (temp != tail->next)
+          {
+              cout << temp->data << "\t";
+              temp = temp->next;
+          }
+
+      }
+
+      void addItem(int d)
+      {
+          link* temp = new link;
+          temp->data = d;
+          if (size == 0)
+          {
+              temp->next = NULL;
+              tail = temp;
+              head = temp;
+              size++;
+          }
+
+          else
+          {
+              temp->next = NULL;
+              tail->next = temp;
+              tail = temp;
+              size++;
+
+          }
+      }
+        
+       // created a variable 
+       link* dataptr;
+      
+       int is_Palindrome(link* h ) 
+       {
+           int flag = 1; 
+           link* temp = h;
+           dataptr = head ; 
+           if (temp == tail)
+           {
+               if (dataptr->data != temp->data)
+               {
+                   flag = 0; 
+                   
+               }
+
+               dataptr = dataptr->next;
+               return flag; 
+           }
+
+           int x = is_Palindrome(temp->next); 
+           if (x == 0)
+           {
+               return 0; 
+           }
+           else {
+
+               if (dataptr->data != temp->data)
+               {
+                   flag = 0;
+               }
+               else
+               {
+                   dataptr = dataptr->next;
+               }
+               return flag; 
+           }
+      
+
+       }
+
+
+};
+
+int main()
+{
+
+    LinkedList l1;
+    queue<int> S;
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(13);
+    l1.addItem(4);
+    l1.addItem(13);
+    l1.addItem(2);
+    l1.addItem(1);
+    l1.display();
+    int M = l1.is_Palindrome(l1.head);
+    if (M == 1)
+    {
+        cout << "\nPalindrome"; 
+    }
+    else
+    {
+        cout << "\nNot Palindrome";
+    }
+    cout << endl; 
+    
+    return 0;
+}
