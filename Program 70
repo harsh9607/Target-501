@@ -114,25 +114,7 @@ public: link* head;
                return S;
            }
            
-           /*
-           if (dataptr == temp )
-           {
-               S.addItem(dataptr->data); 
-               return S; 
-           }
-           if (dataptr > middle(head))
-           {
-
-           }
-           else
-           {
-               S.addItem(dataptr->data);
-               S.addItem(temp->data);
-               dataptr = dataptr->next;
-               return S; 
-           }
-
-           */
+          
        }
 
 };
