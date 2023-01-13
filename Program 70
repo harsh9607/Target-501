@@ -1,0 +1,159 @@
+/*
+Hold my beer and while I
+Fold my  Linked List ;)
+*/
+#include <iostream>
+#include<map>
+using namespace std;
+
+struct link {
+
+    link* next;
+    int data;
+};
+
+class LinkedList
+{
+public: link* head;
+      link* tail;
+      int size;
+
+      LinkedList() : head(NULL), tail(NULL), size(0)
+      {}
+
+      void display()
+      {
+
+          link* temp = head;
+          while (temp != tail->next)
+          {
+              cout << temp->data << "\t";
+              temp = temp->next;
+          }
+
+      }
+
+      void addItem(int d)
+      {
+          link* temp = new link;
+          temp->data = d;
+          if (size == 0)
+          {
+              temp->next = NULL;
+              tail = temp;
+              head = temp;
+              size++;
+          }
+
+          else
+          {
+              temp->next = NULL;
+              tail->next = temp;
+              tail = temp;
+              size++;
+
+          }
+      }
+        
+      link* middle(link* head)
+      {
+          link* slow = head;
+          link* fast = slow;
+          while (fast != tail && fast->next != tail)
+          { 
+              fast = fast->next; 
+              fast = fast->next;
+              slow = slow->next; 
+
+          }
+          return slow; 
+      }
+
+       link* dataptr ;
+       map<link*, bool> visited;
+
+       LinkedList Fold(link* h)
+       {
+           link* temp = h;
+           dataptr = head; 
+           if (temp == tail)
+           {
+               LinkedList D; 
+               D.addItem(dataptr->data); 
+               D.addItem(temp->data);
+               visited[dataptr] = true;
+               visited[temp] = true;
+               dataptr = dataptr->next; 
+               return D; 
+           }
+            
+           LinkedList S  = Fold(temp->next); 
+           
+           if (!(visited[temp]) && !(visited[dataptr]))
+           {    
+               if (temp == dataptr)
+               {
+                   S.addItem(dataptr->data);
+                   visited[dataptr] = true; 
+                   dataptr = dataptr->next; 
+               }
+
+               else {
+                   S.addItem(dataptr->data);
+                   S.addItem(temp->data);
+
+                   visited[dataptr] = true;
+                   visited[temp] = true;
+                   dataptr = dataptr->next;
+               } 
+               return S;
+           }
+           
+           else
+           {
+               return S;
+           }
+           
+           /*
+           if (dataptr == temp )
+           {
+               S.addItem(dataptr->data); 
+               return S; 
+           }
+           if (dataptr > middle(head))
+           {
+
+           }
+           else
+           {
+               S.addItem(dataptr->data);
+               S.addItem(temp->data);
+               dataptr = dataptr->next;
+               return S; 
+           }
+
+           */
+       }
+
+};
+
+int main()
+{
+
+    LinkedList l1;
+    
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(3);
+    l1.addItem(4);
+    l1.addItem(5);
+    l1.addItem(6);
+    l1.addItem(7);
+    l1.display();
+    LinkedList l2 = l1.Fold(l1.head);
+    cout << endl;
+    l2.display();
+    cout << endl; 
+    
+    return 0;
+}
