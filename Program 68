@@ -1,0 +1,122 @@
+/*
+Palindrome - Linked List - Recursuion 
+*/
+#include <iostream>
+#include<queue>
+using namespace std;
+
+struct link {
+
+    link* next;
+    int data;
+};
+
+class LinkedList
+{
+public: link* head;
+      link* tail;
+      int size;
+
+      LinkedList() : head(NULL), tail(NULL), size(0)
+      {}
+
+      void display()
+      {
+
+          link* temp = head;
+          while (temp != tail->next)
+          {
+              cout << temp->data << "\t";
+              temp = temp->next;
+          }
+
+      }
+
+      void addItem(int d)
+      {
+          link* temp = new link;
+          temp->data = d;
+          if (size == 0)
+          {
+              temp->next = NULL;
+              tail = temp;
+              head = temp;
+              size++;
+          }
+
+          else
+          {
+              temp->next = NULL;
+              tail->next = temp;
+              tail = temp;
+              size++;
+
+          }
+      }
+      int is_Palindrome(link* h , queue<int> &S) 
+      {   
+          int flag = 1; 
+
+          link* temp = h; 
+          if (temp == tail)
+          {
+              S.push(temp->data); 
+
+              if (temp->data != S.front())
+              {
+                  flag = 0; 
+              }
+
+              S.pop();
+              return flag; 
+          }
+
+          S.push(temp->data); 
+          int x = is_Palindrome(temp->next, S );
+          if (x == 0)
+          {
+              return x;
+          }
+          else
+          {
+              if (temp->data != S.front())
+              {
+                  flag = 0; 
+              }
+              S.pop();
+              return flag; 
+          }
+          
+                
+
+      }
+
+
+};
+
+int main()
+{
+
+    LinkedList l1;
+    queue<int> S;
+    l1.addItem(1);
+    l1.addItem(2);
+    l1.addItem(3);
+    l1.addItem(4);
+    l1.addItem(3);
+    l1.addItem(2);
+    l1.addItem(1);
+    l1.display();
+    int M = l1.is_Palindrome(l1.head, S);
+    if (M == 1)
+    {
+        cout << "\nPalindrome"; 
+    }
+    else
+    {
+        cout << "\nNot Palindrome";
+    }
+    cout << endl; 
+    
+    return 0;
+}
