@@ -1,0 +1,190 @@
+/*
+Adding two numbers stored in a Linked List 
+*/
+#include <iostream>
+#include<stack>
+using namespace std;
+
+struct link {
+
+    link* next;
+    int data;
+};
+
+class LinkedList
+{
+public: link* head;
+      link* tail;
+      int size;
+
+      LinkedList() : head(NULL), tail(NULL), size(0)
+      {}
+
+      void display()
+      {
+
+          link* temp = head;
+          while (temp != NULL)
+          {
+              cout << temp->data << "\t";
+              temp = temp->next;
+          }
+
+      }
+
+      void addItem(int d)
+      {
+          link* temp = new link;
+          temp->data = d;
+          if (size == 0)
+          {
+              temp->next = NULL;
+              tail = temp;
+              head = temp;
+              size++;
+          }
+
+          else
+          {
+              temp->next = NULL;
+              tail->next = temp;
+              tail = temp;
+              size++;
+
+          }
+      }
+        
+      void addItem_Stack_adapter(int d)
+      {
+          link* temp = new link; 
+          temp->data = d;  
+          temp->next = head; 
+          head = temp;
+          size++;
+      }
+
+      link* middle(link* head)
+      {
+          link* slow = head;
+          link* fast = slow;
+          while (fast != tail && fast->next != tail)
+          { 
+              fast = fast->next; 
+              fast = fast->next;
+              slow = slow->next; 
+
+          }
+          return slow; 
+      }
+
+      LinkedList AddingLinkedList(LinkedList B, LinkedList C)
+      {
+          int size_B = B.size; 
+          int size_C = C.size;
+
+          link* temp_B = B.head; 
+          link* temp_C = C.head;
+
+          LinkedList L; 
+
+          int carry = 0;
+          
+          stack<int> B_val, C_val ;
+          
+          // Creating a Stack of Values. 
+          while (temp_B != NULL || temp_C!=NULL)
+          {
+            
+              if (size_B > size_C)
+              {
+                  
+                  B_val.push(temp_B->data); 
+                  temp_B = temp_B->next; 
+                  size_B--; 
+              }
+              else if (size_B < size_C)
+              {
+
+                  C_val.push(temp_C->data);
+                  temp_C = temp_C->next;
+                  size_C--;
+              }
+              else
+              {
+                  B_val.push(temp_B->data);
+                  temp_B = temp_B->next;
+                  size_B--;
+
+                  C_val.push(temp_C->data);
+                  temp_C = temp_C->next;
+                  size_C--;
+
+
+              }
+          }
+
+          while (!B_val.empty() && !C_val.empty())
+          {     // B_val B_index
+              int B_top = B_val.top(); 
+              int C_top = C_val.top();
+              int resultant = B_top + C_top + carry; 
+              carry = 0; 
+              L.addItem_Stack_adapter(resultant % 10);
+              carry = resultant / 10; 
+              B_val.pop();
+              C_val.pop();
+              
+          }
+          
+          while (!B_val.empty())
+          {
+              int B_top = B_val.top();
+              int resultant = B_top  + carry;
+              carry = 0; 
+              L.addItem_Stack_adapter(resultant % 10);
+              carry = resultant / 10;
+              B_val.pop();
+          }
+          while (!C_val.empty())
+          {
+              int C_top = C_val.top();
+              int resultant = C_top + carry;
+              carry = 0;
+              L.addItem_Stack_adapter(resultant % 10);
+              carry = resultant / 10;
+              C_val.pop();
+          }
+
+          if (carry == 1)
+          {
+              L.addItem_Stack_adapter(1); 
+          }
+        
+          return L; 
+      }
+
+
+};
+
+int main()
+{
+
+    LinkedList l1 , l2 , l3;
+    
+    l1.addItem(9);
+    l1.addItem(9);
+    l1.addItem(9);
+    l1.addItem(9);
+    
+    
+    l2.addItem(9);
+    l2.addItem(9);
+    l2.addItem(9);
+    l2.addItem(9);
+    l3 = l3.AddingLinkedList(l1, l2);
+    l3.display();
+   
+    
+    
+    return 0;
+}
