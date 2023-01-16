@@ -1,0 +1,89 @@
+/*
+Generic Trees !  
+*/
+#include <iostream>
+#include<vector>
+#include<stack>
+
+using namespace std;
+
+struct node {
+
+    int data; 
+    vector<node* > children; 
+
+};
+
+class Tree {
+
+public: node* root; 
+        
+      Tree() : root(NULL)
+      {}
+
+      void additem(int A[], int size , stack<node*> S )
+      {
+          for (int i = 0; i < size; i++)
+          {
+              if (A[i] == -1)
+              {
+                  S.pop(); 
+              }
+
+              else
+              {
+                  if (S.empty())
+                  {
+                      node* temp = new node; 
+                      temp->data = A[i]; 
+                      root = temp; 
+                      S.push(temp);
+                  }
+
+                  else
+                  {
+                      node* temp = new node;
+                      temp->data = A[i]; 
+                      S.top()->children.push_back(temp);
+                      S.push(temp);
+
+                  }
+              }
+
+          }
+
+         
+
+      }
+
+      void display(node* r)
+      {     
+          cout << r->data << "-> ";
+          for (auto& it : r->children )
+          {
+              cout<<it->data<<", ";
+          }
+          cout << "; \n";
+
+          for (auto& it : r->children)
+          {
+              display(it);
+          }
+
+      }
+
+};
+
+
+
+int main()
+{
+    int A[] = { 10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,-1,-1 } ;
+    Tree T; 
+    int size_A = sizeof(A) / sizeof(A[0]);
+    stack<node* > s1;
+    T.additem(A, size_A, s1);
+    T.display(T.root); 
+  
+    return 0;
+}
