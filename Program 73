@@ -68,7 +68,7 @@ public: node* root;
           }
 
       }
-
+     
       int size_of_tree(node* r )
       {   
            
@@ -83,6 +83,21 @@ public: node* root;
           return size; 
       }
 
+      int size_of_tree(node* r , int&  i )
+      {
+
+          node* temp = r;
+          i++; 
+
+          for (node* it : temp->children)
+          {
+              size_of_tree(it,i);
+          }
+
+          return i;
+      }
+
+
 };
 
 
@@ -90,16 +105,24 @@ public: node* root;
 int main()
 {
     int A[] = { 10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,-1,-1 } ;
+    int A2[] = { 5,10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,-1,-1 };
     Tree T , T2 ; 
     int size_A = sizeof(A) / sizeof(A[0]);
     stack<node* > s1;
      
-    
+    // Add item for Tree 1 
     T.addItem(A,size_A,s1);
     T.display(T.root);
+
+    // Calc size 
+    int y = 0; 
     int x = T.size_of_tree(T.root);
-    cout << "Size = " << x<<endl;
+    cout << "Size of T1 = " << x<<endl;
     
+    // Add item for Tree 2  
+    T2.addItem(A2, size_A + 1, s1);
+    x = T2.size_of_tree(T2.root, y );
+    cout << "Size of T2 = " << x << endl;
     
     return 0;
 }
