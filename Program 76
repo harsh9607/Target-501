@@ -1,0 +1,127 @@
+/*
+Cryptic Traversal of a Generic Trees !  
+*/
+#include <iostream>
+#include<vector>
+#include<stack>
+#include<algorithm>
+using namespace std; 
+
+struct node
+{
+    int data;
+    vector<node*> children; 
+};
+
+class Tree
+{
+
+public: node* root;
+        int size = 0;
+
+      Tree() : root(NULL)
+      {}
+
+      void addItem(int A[] , int size_ , stack<node*> S )
+      {
+          for (int i = 0; i < size_; i++)
+          {
+              if (A[i] == -1)
+              {
+                  S.pop(); 
+              }
+
+              else
+              {
+                  node* temp = new node; 
+                  temp->data = A[i]; 
+
+                  if (S.empty())
+                  {
+                      root = temp; 
+                      S.push(root); 
+                  }
+
+                  else
+                  {
+                      S.top()->children.push_back(temp);
+                      S.push(temp); 
+                  }
+              }
+          }
+      }
+
+
+      void display(node* r)
+      {
+          node*temp = r ;
+          cout<<temp->data<<"-> "; 
+          for(node* it : temp->children)
+          {
+              cout<<it->data<<", ";
+          }
+          cout<<";"<<endl;
+          for(node* it : temp->children)
+          {
+             display(it);
+          }
+
+
+
+      }
+
+      int height_of_tree(node* r )
+      {   
+        node* temp = r ; 
+        int ht = -1;
+
+
+        for(node* it : temp->children)
+        {
+
+            ht = max(ht , height_of_tree(it)) ;     
+        }
+
+        ht+= 1  ;
+
+        return ht; 
+      }
+      
+      void Traversal_(node* r)
+      {
+          node *temp = r; 
+          cout<<"Node pre "<<temp->data<<"\n"; 
+          for(node* it : temp->children)
+          {
+              cout<<"Edge Pre "<<temp->data<<"->"<<it->data<<endl;
+              Traversal_(it) ;
+              cout<<"Edge Post "<<it->data<<"->"<<temp->data<<endl;
+              
+          }
+          cout<<"Node post "<<temp->data<<"\n";
+          
+      }
+
+};
+
+
+int main()
+{
+    int A[] = { 10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,-1,-1 } ;
+
+    Tree T ; 
+    int size_A = sizeof(A) / sizeof(A[0]);
+    stack<node* > s1;
+
+
+    T.addItem(A,size_A,s1);
+   /* T.display(T.root);
+
+    int ht; 
+    ht = T.height_of_tree(T.root );
+    cout<<"Height = "<<ht<<endl;
+  */
+    T.Traversal_(T.root); 
+    
+    return 0;
+}
