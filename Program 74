@@ -1,0 +1,108 @@
+/*
+Max of Generic Trees !  
+*/
+#include <iostream>
+#include<vector>
+#include<stack>
+using namespace std; 
+
+struct node
+{
+    int data;
+    vector<node*> children; 
+};
+
+class Tree
+{
+
+public: node* root;
+        int size = 0;
+      
+      Tree() : root(NULL)
+      {}
+
+      void addItem(int A[] , int size_ , stack<node*> S )
+      {
+          for (int i = 0; i < size_; i++)
+          {
+              if (A[i] == -1)
+              {
+                  S.pop(); 
+              }
+
+              else
+              {
+                  node* temp = new node; 
+                  temp->data = A[i]; 
+                  
+                  if (S.empty())
+                  {
+                      root = temp; 
+                      S.push(root); 
+                  }
+
+                  else
+                  {
+                      S.top()->children.push_back(temp);
+                      S.push(temp); 
+                  }
+              }
+          }
+      }
+        
+      
+      void display(node* r)
+      {
+          node*temp = r ;
+          cout<<temp->data<<"-> "; 
+          for(node* it : temp->children)
+          {
+              cout<<it->data<<", ";
+          }
+          cout<<";"<<endl;
+          for(node* it : temp->children)
+          {
+             display(it);
+          }
+          
+          
+          
+      }
+        
+      int max_of_tree(node* r , int& i )
+      {
+          node* temp  =  r ;
+          if(temp->data > i )
+          {
+              i = temp->data; 
+          }
+          for(node* it : temp->children)
+          {
+              max_of_tree(it ,  i ); 
+          }
+          return i ; 
+      }
+
+
+
+};
+
+
+
+int main()
+{
+    int A[] = { 10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,-1,-1 } ;
+    int A2[] = { 5,10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,-1,-1 };
+    Tree T ; 
+    int size_A = sizeof(A) / sizeof(A[0]);
+    stack<node* > s1;
+     
+    // Add item for Tree 1 
+    T.addItem(A,size_A,s1);
+    T.display(T.root);
+    // Max size of a tree 
+    int i = 0 ; 
+    int max = T.max_of_tree(T.root , i);
+    cout<<"Max = "<<max<<endl;
+    return 0;
+}
