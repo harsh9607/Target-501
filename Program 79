@@ -1,0 +1,159 @@
+/*
+Zig Zag Level wise  printing of Generic Trees !  
+*/
+#include <iostream>
+#include<vector>
+#include<queue> 
+#include<stack>
+#include<algorithm>
+using namespace std; 
+
+struct node
+{
+    int data;
+    vector<node*> children; 
+};
+
+class Tree
+{
+
+    public: node* root;
+            int size = 0;
+      
+        Tree() : root(NULL)
+             {}
+
+      void addItem(int A[] , int size_ , stack<node*> S )
+      {
+          for (int i = 0; i < size_; i++)
+          {
+              if (A[i] == -1)
+              {
+                  S.pop(); 
+              }
+
+              else
+              {
+                  node* temp = new node; 
+                  temp->data = A[i]; 
+                  
+                  if (S.empty())
+                  {
+                      root = temp; 
+                      S.push(root); 
+                  }
+
+                  else
+                  {
+                      S.top()->children.push_back(temp);
+                      S.push(temp); 
+                  }
+              }
+          }
+      }
+        
+      
+      void display(node* r)
+      {
+          node*temp = r ;
+          cout<<temp->data<<"-> "; 
+          for(node* it : temp->children)
+          {
+              cout<<it->data<<", ";
+          }
+          cout<<";"<<endl;
+          for(node* it : temp->children)
+          {
+             display(it);
+          }
+          
+      }
+        
+      
+     void Level_Order_ZigZag( node* r , queue<node* > &Q , queue<node* > &Q2 )
+     {
+        node* temp = r ; 
+        static int i = 0 ; 
+        stack<node*> my_S ;
+        queue<node*> my_Q ; 
+        
+        // Approach is to use 2 queues to distinctly print level wise order 
+        // then find a way to print it in zig zag manner
+        // Adding the Root node only once in the Queue  
+        
+        if(Q.empty())
+        {
+            Q.push(temp);
+        }
+        
+        while(!Q.empty()){
+        
+        for(node* it : Q.front()->children)
+        {
+            Q2.push(it); 
+        }
+            // Print zig zag 
+            
+            if(i%2==0)
+            {
+                
+             my_Q.push(Q.front());
+             Q.pop();
+             
+                
+            }
+            else
+            {
+              my_S.push(Q.front());     
+              Q.pop();   
+            }
+            
+        } 
+        
+        
+        i++; 
+        // Printing it all ! 
+        
+        while(!my_Q.empty())
+        {
+            cout<<my_Q.front()->data<<" ";
+            my_Q.pop();
+        }
+        
+        while(!my_S.empty())
+        {
+            cout<<my_S.top()->data<<" ";
+            my_S.pop();
+        }
+        
+        cout<<endl;
+        
+        while(!Q2.empty())
+        {
+            Q.push(Q2.front());
+            Q2.pop();
+        }
+        
+        if(!Q.empty())
+        {
+            Level_Order_ZigZag(r , Q , Q2 ); 
+        }
+     }
+};
+    
+int main()
+{
+    int A[] = { 10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,-1,-1 } ;
+    
+    Tree T ; 
+    int size_A = sizeof(A) / sizeof(A[0]);
+    queue<node* > q1,q2;
+    stack<node* > s1,s2,s; 
+     
+    T.addItem(A,size_A,s1);
+    //T.display(T.root);
+    T.Level_Order_ZigZag(T.root , q1 , q2) ;
+   
+    
+    return 0;
+}
