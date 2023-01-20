@@ -76,35 +76,21 @@ class Tree
                 
                 node* temp =  r ;
                 
-                
-                    for(node* x : temp->children)
-                    {   
-                        // Simply for debugging 
-                        cout<<"it->data : "<<x->data<<endl; 
-                        //  -------------
-                        if(x->children.size() == 0 )
-                        {  
-                            cout<<"Erasing : "<<x->data<<endl; 
-                            temp->children.erase( find ( temp->children.begin() , temp->children.end() , x ));
-                            delete x ; 
+                    for(int i = temp->children.size() - 1   ; i>=0 ; i--) 
+                    {
+                        node *child = temp->children[i];
+                        if(child->children.size() ==0 )
+                        {   
+                            vector<node*>:: iterator it = find(temp->children.begin(),temp->children.end(),child);  
+                            // Erase function takes a pointer to that value as argument. 
+                            temp->children.erase(it) ; 
                         }
-                        
-                        // Simply for debugging purpose
-                        cout<<"---Calling display--\n"; 
-                        Display(root); 
-                        cout<<" -------------\n";
-                        //  -------------
-                        
                     }
                     
-                    cout<<"Temp : "<<temp->data<<endl; 
-                    for(node* rt: temp->children)
-                    {   cout<<"rt - ";
-                    cout<<rt->data<<" "; 
-                    }
+                    
                     
                     for(node* it : temp->children)
-                    {  cout<<"\nRecursion Called for node : "<<it->data<<endl;
+                    {  
                         Remove_leaves(it);    
                     }
             }
