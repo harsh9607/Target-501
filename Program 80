@@ -1,5 +1,5 @@
 /******************************************************************************
-Removal of leaf from a Gerneric  tree 
+Removal of leaf from a Generic  tree 
 *******************************************************************************/
 #include <iostream>
 #include <vector> 
