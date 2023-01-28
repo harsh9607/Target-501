@@ -1,0 +1,140 @@
+/******************************************************************************
+Symmetric Generic Trees 
+*******************************************************************************/
+#include <iostream>
+#include <vector> 
+#include <stack>
+#include <queue>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    vector<node* > children;
+
+};
+
+class Tree
+{
+public: node* root;
+
+      void Display(node* r)
+      {
+          node* temp = r;
+          cout << temp->data << " -> ";
+          for (node* it : temp->children)
+          {
+              cout << it->data << ", ";
+          }
+          cout << ";" << endl;
+          for (node* it : temp->children)
+          {
+              Display(it);
+          }
+
+
+      }
+
+      void additem(int A[], int size_a, stack<node*> S)
+      {
+
+          for (int i = 0; i < size_a; i++)
+          {
+              if (A[i] == -1)
+              {
+                  S.pop();
+              }
+
+              else
+              {
+                  node* temp = new node;
+                  if (S.empty())
+                  {
+                      temp->data = A[i];
+                      root = temp;
+                      S.push(temp);
+                  }
+
+                  else
+                  {
+                      temp->data = A[i];
+                      S.top()->children.push_back(temp);
+                      S.push(temp);
+                  }
+              }
+
+          }
+      }
+
+      
+
+
+
+      bool is_Symmetric(node* r)
+      {
+          node* temp = r; 
+          
+          for (int i = 0; i < temp->children.size(); i++)
+          { 
+              int r = temp->children.size(); 
+              if (temp->children[i]->children.size() != temp->children[r - i - 1 ]->children.size())
+              {
+                  return false; 
+              }
+
+          }
+          
+          for (int i = 0; i < temp->children.size(); i++)
+          {
+              bool ans = is_Symmetric(temp->children[i]); 
+              if (ans == false)
+              {
+                  return false; 
+              }
+          }
+
+          return true; 
+      }
+
+};
+
+
+int main()
+{
+    int A[] = { 10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,200,-1,-1,-1 };
+    int A2[] = { 10,20,50,-1,60,-1,-1,30,70,600,-1,-1,80,120,-1,-1,90,-1,-1,40,100,-1,500,-1,-1,-1  };
+    int size_A = sizeof(A) / sizeof(A[0]);
+    int size_A2 = sizeof(A2) / sizeof(A2[0]);
+    stack<node* > S,S2;
+    Tree T, T2 ;
+    T.additem(A, size_A, S);
+    T2.additem(A2, size_A2, S2);
+    T.Display(T.root);
+    T2.Display(T2.root);
+   
+   
+    bool ans = T2.is_Symmetric(T2.root); 
+    cout << "Testing Tree # 2 \n";
+    if (ans == true)
+    {
+        cout << "TREES ARE SYMMETRIC\n"; 
+    }
+    else
+    {
+        cout << "TREES ARE NOT SYMMETRIC \n"; 
+    }
+
+    ans = T.is_Symmetric(T.root);
+    cout << "Testing Tree # 1 \n";
+    if (ans == true)
+    {
+        cout << "TREES ARE SYMMETRIC\n";
+    }
+    else
+    {
+        cout << "TREES ARE NOT SYMMETRIC\n ";
+    }
+
+    return 0;
+}
