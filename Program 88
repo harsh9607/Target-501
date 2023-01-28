@@ -1,5 +1,5 @@
 /******************************************************************************
-Symmetric Generic Trees 
+Symmetric Trees 
 *******************************************************************************/
 #include <iostream>
 #include <vector> 
@@ -71,27 +71,25 @@ public: node* root;
 
 
 
-      bool is_Symmetric(node* r)
+      bool is_Symmetric(node* r1 , node* r2 )
       {
-          node* temp = r; 
+        
           
-          for (int i = 0; i < temp->children.size(); i++)
-          { 
-              int r = temp->children.size(); 
-              if (temp->children[i]->children.size() != temp->children[r - i - 1 ]->children.size())
-              {
-                  return false; 
-              }
-
-          }
-          
-          for (int i = 0; i < temp->children.size(); i++)
+          if (r1->children.size() != r2->children.size())
           {
-              bool ans = is_Symmetric(temp->children[i]); 
-              if (ans == false)
+              return false; 
+          }
+          for (int i = 0; i < r1->children.size(); i++)
+          {
+              int j = r1->children.size() - 1 - i; 
+              node* temp1 = r1->children[i];
+              node* temp2 = r2->children[j];
+
+              if (is_Symmetric(temp1, temp2) == false)
               {
                   return false; 
               }
+            
           }
 
           return true; 
@@ -102,7 +100,7 @@ public: node* root;
 
 int main()
 {
-    int A[] = { 10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,200,-1,-1,-1 };
+    int A[] = { 10,20,50,51,-1,52,-1,-1,60,61,-1,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,101,-1,-1,200,201,-1,202,-1,-1,-1,-1 };
     int A2[] = { 10,20,50,-1,60,-1,-1,30,70,600,-1,-1,80,120,-1,-1,90,-1,-1,40,100,-1,500,-1,-1,-1  };
     int size_A = sizeof(A) / sizeof(A[0]);
     int size_A2 = sizeof(A2) / sizeof(A2[0]);
@@ -114,7 +112,7 @@ int main()
     T2.Display(T2.root);
    
    
-    bool ans = T2.is_Symmetric(T2.root); 
+    bool ans = T2.is_Symmetric(T2.root,T2.root); 
     cout << "Testing Tree # 2 \n";
     if (ans == true)
     {
@@ -125,7 +123,7 @@ int main()
         cout << "TREES ARE NOT SYMMETRIC \n"; 
     }
 
-    ans = T.is_Symmetric(T.root);
+    ans = T.is_Symmetric(T.root,T.root);
     cout << "Testing Tree # 1 \n";
     if (ans == true)
     {
