@@ -71,13 +71,13 @@ public: node* root;
       void Ceil_Floor(node* r, int d, int& _ceil, int& _floor) {
 
           node* temp = r;
-          //  For ceil 
+          //  For Floor 
           int diff1 = d - temp->data;
           if (diff1 < (d - _floor) && diff1>0)
           {
               _floor = temp->data;
           }
-          // For floor
+          // For Ceil
           int diff2 = temp->data - d;
           if (diff2 > 0 && (diff2 < _ceil - d))
           {
