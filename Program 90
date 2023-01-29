@@ -68,20 +68,20 @@ public: node* root;
       }
 
 
-      void Ceil_Floor(node* r , int d , int& _ceil, int& _floor) {
-              
-          node* temp = r; 
+      void Ceil_Floor(node* r, int d, int& _ceil, int& _floor) {
+
+          node* temp = r;
           //  For ceil 
-          int diff1 = d - temp->data ;
-          if (diff1 < (d - _ceil) && diff1>0)
+          int diff1 = d - temp->data;
+          if (diff1 < (d - _floor) && diff1>0)
           {
-              _ceil = temp->data; 
+              _floor = temp->data;
           }
           // For floor
           int diff2 = temp->data - d;
-          if (diff2 > 0 && (diff2 < _floor - d))
+          if (diff2 > 0 && (diff2 < _ceil - d))
           {
-              _floor = temp->data; 
+              _ceil = temp->data;
           }
           for (auto child : temp->children)
           {
@@ -96,7 +96,7 @@ public: node* root;
 
 int main()
 {
-    int A[] = { 10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,-1,-1};
+    int A[] = { 10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,-1,-1 };
     int A2[] = { 10,20,50,-1,60,-1,-1,30,70,600,-1,-1,80,120,-1,-1,90,-1,-1,40,100,-1,500,-1,-1,-1 };
     int size_A = sizeof(A) / sizeof(A[0]);
     int size_A2 = sizeof(A2) / sizeof(A2[0]);
@@ -107,7 +107,7 @@ int main()
     T.Display(T.root);
     T2.Display(T2.root);
 
-    int _ceil = -1 , _floor = INT_MAX;
+    int _ceil = INT_MAX, _floor = -1 ;
     cout << _ceil;
 
     T.Ceil_Floor(T.root, 40, _ceil, _floor);
