@@ -1,0 +1,275 @@
+#include<iostream>
+#include<stack>
+#include<queue>
+using namespace std; 
+
+class node
+{
+public:
+	int data; 
+	node* left; 
+	node* right; 
+	// Constructor
+   node() :data(0), left(NULL), right(NULL)
+		{}
+};
+
+class BinaryTree
+{
+public: node* root; 
+	   BinaryTree() :root(NULL) 
+		{}
+	  ~BinaryTree()
+		{}
+	  
+	  void Additem(int A[], char B[], int size_A , int size_B , stack<node*> S)
+	  {   
+		  int k = 0;
+		  for (int i = 0; i < size_B; i++)
+		  {
+			  if (B[i] == 'O')
+			  {
+				  node* temp = new node; 
+				  temp->data = A[k]; 
+				  root = temp; 
+				  S.push(root); 
+				  k++; 
+			  }
+
+			  else if (B[i] == 'L')
+			  {   
+				  node* temp = new node; 
+				  temp->data = A[k]; 
+				  k++;
+				  S.top()->left = temp; 
+				  S.push(temp); 
+			  }
+
+
+			  else if (B[i] == 'R')
+			  {
+				  node* temp = new node;
+				  temp->data = A[k];
+				  k++;
+				  S.top()->right = temp;
+				  S.push(temp);
+			  }
+
+			  else if (B[i] == 'P')
+			  {
+				  S.pop(); 
+			  }
+
+		  }
+			  
+	  }
+	   
+	  void Display(node* r)
+	  {  
+		  if (r != NULL) {
+			  
+			  cout << "Node: " << r->data << " -> L :  ";
+			  if(r->left!=NULL)
+			  {
+				  cout << r->left->data << ",\t"; 
+			  }
+			  else
+			  {
+				  cout << "NULL,  "; 
+			  }
+			  if (r->right != NULL)
+			  {
+				  cout<<"R:" << r->right->data << ";\n";
+			  }
+			  else
+			  {
+				  cout << "R: NULL;\n"; 
+			  }
+			  
+			  Display(r->left);
+			  Display(r->right);
+		  }
+		  else
+		  {
+			  return;
+		  }
+	  }
+
+	  void Sum(node* r , int & sum)
+	  {
+		  node* temp = r; 
+
+		  if (temp != NULL)
+		  {
+			  sum += temp->data; 
+			  Sum(temp->left, sum); 
+			  Sum(temp->right, sum); 
+		  }
+	  
+	  }
+
+	  void max_node_val(node* r, int& Max)
+	  {
+		  node* temp = r;
+		  if (temp == NULL)
+		  {
+			  return; 
+		  }
+
+		  if (temp->data > Max)
+		  {
+			  Max = temp->data; 
+		  }
+		  
+		   max_node_val(temp->left, Max);
+		   max_node_val(temp->right, Max);
+
+		  
+	  }
+
+	  int height(node* r)
+	  {
+		  int ht = -1; 
+		  node* temp = r; 
+		  if (temp == NULL)
+		  {
+			  return ht; 
+		  }
+		  ht = max(ht, height(temp->left));
+		  ht = max(ht, height(temp->right));
+
+		  return ht + 1;
+
+	  }
+
+	  void Size(node* r , int & size)
+	  {
+		  node* temp = r; 
+		  if(temp==NULL)
+		  {
+			  return; 
+		  }
+		  size++; 
+		  Size(temp->left, size);
+		  Size(temp->right, size);
+
+	  }
+
+	  void Preorder(node* r)
+	  {
+		  node* temp = r;
+		  if (temp != NULL)
+		  {
+			  cout << temp->data << " -> ";
+			  Preorder(temp->left);
+			  Preorder(temp->right); 
+		  }
+
+	  }
+
+	  void Postorder(node* r)
+	  {
+		  node* temp = r;
+		  if (temp != NULL)
+		  {
+			  
+			  Postorder(temp->left);
+			  Postorder(temp->right);
+			  cout << temp->data << " -> ";
+		  }
+
+	  }
+
+	  void Inorder(node* r)
+	  {
+		  node* temp = r;
+		  if (temp != NULL)
+		  {
+
+			  Inorder(temp->left);
+			  cout << temp->data << " -> ";
+			  Inorder(temp->right);
+		  }
+
+	  }
+	  
+	  void Levelorder(node* r , queue<node* >& Q , queue<node*>&Q2)
+	  {
+		  node* temp = r; 
+		  if(temp==NULL)
+		  {
+			  return; 
+		  }
+
+		  if (Q.empty() && temp!=NULL)
+		  {
+			  Q.push(temp); 
+			 
+		  }
+
+		  while (!Q.empty())
+		  {
+			  if(Q.front()->left!=NULL)
+			  Q2.push(Q.front()->left);
+			  if (Q.front()->right != NULL)
+			  Q2.push(Q.front()->right);
+			  
+			  cout << Q.front()->data<<"\t";
+			  Q.pop(); 
+		  }
+		  cout << endl;
+
+		  while (!Q2.empty())
+		  {
+			  Q.push(Q2.front());
+			  Q2.pop();
+		  }
+		  
+		  if(!Q.empty())
+		  Levelorder(Q.front(), Q, Q2);
+	  }
+	
+
+
+};
+
+
+int main()
+{    
+	int A[] = { 50 , 25 ,12,  37,30 , 75,62,70,87}; 
+	char B[] = { 'O' , 'L' , 'L' , 'P', 'R', 'L' , 'P' , 'P' , 'P', 'R' ,'L' ,'R' , 'P', 'P' , 'R' };
+	BinaryTree T;
+	stack<node*> S; 
+	int s_A = sizeof(A) / sizeof(A[0]); 
+	int s_B = sizeof(B) / sizeof(B[0]); 
+	
+	T.Additem(A, B, s_A, s_B ,S) ;
+	
+	T.Display(T.root);
+	int sum = 0 , Max; 
+	T.Sum(T.root, sum); 
+	cout << "Sum = " << sum;
+	T.max_node_val(T.root, Max);
+	cout << "\nMax = " << Max;
+	int ht = 0; 
+	ht = T.height(T.root);
+	cout << "\nHeight of tree = " << ht;
+	int size = 0;
+	T.Size(T.root, size); 
+	cout << "\nSize  = " << size; 
+
+	cout << '\n'<<" Preorder :";
+	T.Preorder(T.root);
+
+	cout << '\n'<<" Inorder :";
+	T.Inorder(T.root);
+
+	cout << '\n' << "Postorder :";
+	T.Postorder(T.root);
+
+	queue<node*> Q,Q2; 
+	cout << endl;
+	T.Levelorder(T.root, Q,Q2); 
+
+	return 0;
+}
