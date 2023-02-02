@@ -1,0 +1,169 @@
+// Reverse the Left cloned tree
+#include<iostream>
+#include<stack>
+#include<queue>
+using namespace std; 
+
+class node
+{
+public:
+	int data; 
+	node* left; 
+	node* right; 
+	// Constructor
+   node() :data(0), left(NULL), right(NULL)
+		{}
+};
+
+class BinaryTree
+{
+public: node* root; 
+	   BinaryTree() :root(NULL) 
+		{}
+	  ~BinaryTree()
+		{}
+	  
+	  void Additem(int A[], char B[], int size_A , int size_B , stack<node*> S)
+	  {   
+		  int k = 0;
+		  for (int i = 0; i < size_B; i++)
+		  {
+			  if (B[i] == 'O')
+			  {
+				  node* temp = new node; 
+				  temp->data = A[k]; 
+				  root = temp; 
+				  S.push(root); 
+				  k++; 
+			  }
+
+			  else if (B[i] == 'L')
+			  {   
+				  node* temp = new node; 
+				  temp->data = A[k]; 
+				  k++;
+				  S.top()->left = temp; 
+				  S.push(temp); 
+			  }
+
+
+			  else if (B[i] == 'R')
+			  {
+				  node* temp = new node;
+				  temp->data = A[k];
+				  k++;
+				  S.top()->right = temp;
+				  S.push(temp);
+			  }
+
+			  else if (B[i] == 'P')
+			  {
+				  S.pop(); 
+			  }
+
+		  }
+			  
+	  }
+	   
+	  void Display(node* r)
+	  {  
+		  if (r != NULL) {
+			  
+			  cout << "Node: " << r->data << " -> L :  ";
+			  if(r->left!=NULL)
+			  {
+				  cout << r->left->data << ",\t"; 
+			  }
+			  else
+			  {
+				  cout << "NULL,  "; 
+			  }
+			  if (r->right != NULL)
+			  {
+				  cout<<"R:" << r->right->data << ";\n";
+			  }
+			  else
+			  {
+				  cout << "R: NULL;\n"; 
+			  }
+			  
+			  Display(r->left);
+			  Display(r->right);
+		  }
+		  else
+		  {
+			  return;
+		  }
+	  }
+		
+	  void  Leaf_finder(node* r , vector<int > &V )
+	  {
+		  if (r != NULL) {
+			  if (r->left == NULL && r->right == NULL)
+			  {
+				  cout << r->data << "\n";
+				  V.push_back(r->data); 
+
+				  
+			  }
+			   Leaf_finder(r->left, V);
+		       Leaf_finder(r->right ,V );
+			  
+		  }
+	  }
+
+	  void Lclone(node* r) {
+	  
+		  node* temp = r;
+		  if (temp != NULL)
+		  {
+			  node* temp2 = new node;
+			  temp2->data = temp->data; 
+			  temp2->left = temp->left;
+			  temp->left  = temp2; 
+
+			  Lclone(temp2->left);
+			  Lclone(temp->right); 
+		  }
+	  
+	  }
+	  void LcloneRev(node* r)
+	  {
+		  node* temp = r; 
+		  if (temp != NULL)
+		  {      
+			  node* temp2 = temp->left;
+			  if (temp2->data == temp->data)
+			  {
+				  temp->left = temp2->left; 
+				  delete temp2; 
+			  }
+			  LcloneRev(temp->left); 
+			  LcloneRev(temp->right); 
+		  }
+	  }
+};
+
+
+int main()
+{    
+	int A[] = {   1 ,  2 ,   6 ,  8 , 12 ,     13  ,             9   , 14  ,       15 , 16,   18  , 22 ,            19 , 23 ,                                7  , 10  ,     11  ,             3        }; 
+	char B[] = { 'O', 'L' , 'L', 'L','L' ,'P', 'R' , 'P', 'P' ,  'R' , 'L' , 'P' ,'R' , 'L' , 'L' , 'L','P' ,'P' , 'R' , 'R' ,'P','P' , 'P', 'P' ,'P' , 'P', 'R', 'L' , 'P', 'R','P','P' ,'P', 'R' ,'P'};
+	BinaryTree T;
+	stack<node*> S; 
+	int s_A = sizeof(A) / sizeof(A[0]); 
+	int s_B = sizeof(B) / sizeof(B[0]); 
+	
+	T.Additem(A, B, s_A, s_B ,S) ;
+	
+	T.Display(T.root);
+	vector<int > V; 
+	
+	T.Lclone(T.root);
+	cout << "\n Tree After cloning\n\n";
+	T.Display(T.root);
+	cout << "\n\n Reversing it back\n";
+	T.LcloneRev(T.root);
+	T.Display(T.root);
+	return 0;
+}
