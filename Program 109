@@ -1,0 +1,80 @@
+// Wave Display of Martix
+#include<iostream>
+using namespace std; 
+const int row_A = 3, col_A = 3, row_B = 3, col_B = 3;
+
+
+void Display(int r, int c, int C[][col_B])
+{
+	for (int i = 0; i < r; i++)
+	{
+		for (int j = 0; j < c; j++)
+		{
+			cout << C[i][j] << '\t';
+		}
+		cout << endl;
+	}
+}
+	
+void waveDisplay(int C[][col_B])
+{
+	int k = 0; 
+	for (int i = 0; i < col_B; i++)
+	{   
+		for (int j = 0; j < row_A; j++)
+		{
+			if (k % 2 == 0)
+			{
+				cout << C[j][i]<<endl;
+			}
+			else
+			{
+				cout << C[row_A - j -1][i] << endl;
+			}
+		}
+		k++; 
+	}
+		
+}
+
+
+
+int main()
+{    
+	
+	int A[row_A][col_A] = {
+		{ 1 , 0, 0},
+	    { 0 , 1 ,0},
+	    { 0 , 0 ,1}      
+	};
+
+	int  B[row_B][col_B] = {{1,2,3},{4,5,7},{63,34,10}};
+		
+
+	int C[row_A][col_A];
+	
+	if (row_B != col_A)
+	{
+		cout << "Error ! Non compatible for multiplication\n";
+		exit(0);
+	}
+	// Simple multiplication 
+	for (int i = 0; i < row_A; i++)
+	{
+		for (int j = 0; j < col_A; j++)
+		{
+			C[i][j] = 0; 
+
+			for (int k = 0; k < col_A; k++)
+			{
+				C[i][j] += A[i][k] * B[k][j]; 
+
+		    }
+		}
+	}
+
+	Display(row_A, col_B ,C );
+	waveDisplay(C);
+
+	return 0;
+}
