@@ -1,0 +1,178 @@
+// Shell rotate !
+// You enter which shell of matrix you want to rotate and how many times !
+// It will print the new rotated matrix ! 
+
+#include <iostream>
+using namespace std; 
+
+const int  r_max = 6, c_max = 6;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+int ShellsPossible(int rmax)
+{
+	return rmax / 2; 
+}
+
+void Shell_elements(int r1 , int c1 , int r2 , int c2 , int x  , int C[][c_max])
+{   // Find the val for r1 , r2 ,c1 and c2 
+	while (x-1 > 0 )
+	{
+		r1++; r2--; 
+		c1++; c2--; 
+		x--; 
+	}
+	// Now lets see the elements. 
+	// 1. DOWN 
+	for (int i = r1; i <= r2; i++)
+	{
+		cout << C[i][c1]<<" ";
+	}
+	c1++;
+
+	// 2. RIGHT 
+	for (int i = c1; i <= c2; i++)
+	{
+		cout << C[r2][i] << " ";
+	}
+	r2--; 
+
+	// 3. UP  
+	for (int i = r2; i >= r1; i--)
+	{
+		cout << C[i][c2] << " ";
+	}
+	c2--;
+	// 4. LEFT 
+	for (int i = c2; i >= c1; i--)
+	{
+		cout << C[r1][i] << " ";
+	}
+	r1--;
+
+}
+
+void Display( int C[][c_max])
+{
+	for(int i =0 ; i<r_max; i++)
+	{
+		for (int j = 0; j < c_max; j++)
+		{
+			cout << C[i][j] <<"\t";
+		}
+		cout << endl;
+	}
+}
+
+void Rotate(int C[][c_max] , int m , int x , int r1 , int r2 , int c1 , int c2  )
+{ 
+	int o_r1 = r1, o_r2 = r2, o_c1 = c1, o_c2 = c2;
+	while (x - 1 > 0)
+	{
+		r1++; r2--;
+		c1++; c2--;
+		x--;
+	}
+	
+
+	int total_elements = 2 * ((r2 - r1 ) + (c2 - c1 ));
+	int total_actual_rotation = m % total_elements; 
+
+	cout << "TOTAL actual = " << total_actual_rotation<<endl;
+
+	for (int i = 0; i < total_actual_rotation; i++)
+	{
+		int temp=C[r1][c1] ;
+
+		// 1. DOWN 
+		for (int i = r1+1; i <= r2; i++)
+		{
+			int x = C[i][c1]; 
+			C[i][c1] = temp; 
+			temp = x;
+			
+		}
+		c1++;
+
+		// 2. RIGHT 
+		for (int i = c1; i <= c2; i++)
+		{    
+			int x = C[r2][i]; 
+			//cout << C[r2][i] << " ";
+			C[r2][i] = temp; 
+			temp = x;
+		}
+		r2--;
+
+		// 3. UP  
+		for (int i = r2; i >= r1; i--)
+		{
+			int x = C[i][c2]; 
+			// cout << C[i][c2] << " ";
+			C[i][c2] = temp; 
+			temp = x;
+		}
+		c2--;
+		// 4. LEFT 
+		for (int i = c2; i >= c1; i--)
+		{
+			int x = C[r1][i]; 
+			//cout << C[r1][i] << " ";
+			C[r1][i] = temp; 
+			temp = x; 
+		}
+		 
+		r1++;
+		C[r1 - 1 ][c1 - 1] = temp;
+
+		r1--; c1--; r2++; c2++;
+		
+		
+
+
+	}
+	for (int i = o_r1; i <= o_r2; i++)
+	{
+		for (int j = o_c1; j <= o_c2; j++)
+		{
+
+			cout << C[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+
+int main()
+{
+	// 1. Max shell possible  ... DONE
+	// 2. Shell ke elements kya hai ..DONE 
+	// 3. How to rotate the elements of the shell ...
+
+	int C[r_max][c_max] = { {1,2,3,4,5,6}, {7,8,9,10,11,12}, {13,14,15,16,17,18} ,{19,20,21,22,23,24}, {25,26,27,28,29,30}, {31,32,33,34,35,36} };
+	int y = ShellsPossible(r_max );
+
+	int shell_no , r1 = 0 ,c1 =0 , r2 = r_max-1 , c2 = c_max-1;
+
+	cout << "Which #shell do you want to rotate ?"; 
+	cin >> shell_no; 
+	cout << "Original Matrix \n";
+	Display(C);
+	if (shell_no <= y)
+	{
+		Shell_elements(r1, c1, r2, c2 ,shell_no , C );
+		int No_of_rot; 
+		cout << "\n How many times do you want it to rotate ? "; 
+		cin >> No_of_rot; 
+		Rotate(C, No_of_rot, shell_no , r1, r2,c1, c2);
+		Shell_elements(r1, c1, r2, c2, shell_no, C);
+
+	}
+
+	else
+	{
+		cout << "Not possible to calculate ! Invalid shell number "; 
+	}
+
+	return 0; 
+
+}
