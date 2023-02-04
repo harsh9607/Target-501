@@ -1,0 +1,75 @@
+// Saddle point - element of a matrix that is min in its row and max in its col 
+#include <iostream>
+#include<vector>
+using namespace std; 
+
+const int  r_max = 6, c_max = 6;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+void saddle_point(int C[][c_max])
+{
+	 
+	
+	for (int i = 0; i < r_max; i++)
+	{
+		int x = i, y = 0; 
+		int saddle_point = C[i][0];
+
+		// Row wise travel
+		for (int j = 0; j < c_max; j++)
+		{
+
+			if (C[i][j] < saddle_point)
+			{
+				x = i, y = j;
+				saddle_point = C[i][j]; 
+			}
+		}
+		
+		// is it col maximum also ? 
+		int flag = 0;
+		for (int p = 0; p < r_max; p++)
+		{
+			if (saddle_point < C[p][y])
+			{
+				flag = -1; 
+			}
+		}
+		if (flag == 0)
+		{
+			cout << "Saddle point = " << saddle_point; 
+			break; 
+		}
+	}
+
+}
+
+
+void Display( int C[][c_max])
+{
+	for(int i =0 ; i<r_max; i++)
+	{
+		for (int j = 0; j < c_max; j++)
+		{
+			cout << C[i][j] <<"\t";
+		}
+		cout << endl;
+	}
+}
+
+
+
+
+
+int main()
+{
+	
+	int C[r_max][c_max] = { {31,96,33,34,35,36} , {1,2,3,4,5,6}, {7,8,9,10,11,12}, {13,14,15,16,17,18} ,{19,20,21,22,23,24}, {25,26,27,28,29,30} };
+	int  r1 = 0 ,c1 =0 , r2 = r_max-1 , c2 = c_max-1;
+
+	Display(C);
+	
+	saddle_point(C);
+
+	return 0; 
+
+}
