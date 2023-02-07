@@ -1,0 +1,31 @@
+// Inverse of  an Array 
+#include<iostream>
+using namespace std; 
+
+void display(int A[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		cout << A[i]<<"\t";
+	}
+}
+
+void inverse(int A[] , int size)
+{   
+	int* B = new int[size];
+	for (int i = 0; i < size; i++)
+	{
+		B[A[i]] = i; 
+	}
+	cout << "B = "; 
+	display(B, size);
+}
+
+
+int main()
+{    
+	int A[] = { 1,2,0,4,5,6,7,8,3,9 }; 
+	int size = sizeof(A) / sizeof(A[0]); 
+	inverse(A, size); 
+	return 0;
+}
