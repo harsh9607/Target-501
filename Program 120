@@ -1,0 +1,47 @@
+// Rotate an Array 
+#include<iostream>
+using namespace std; 
+
+void display(char A[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		cout << A[i]<<"\t";
+	}
+}
+
+void rotate(char A[] , int size , int k )
+{
+	int total_rotations = k % size; 
+	int temp; 
+	if (k < 0)
+	{
+		k = k % size; 
+		k = size + k; 
+		total_rotations = k; 
+	}
+
+	while (total_rotations > 0)
+	{
+		temp = A[size-1]; 
+		for (int i = size-1; i >0 ; i--)
+		{
+			A[i] = A[i - 1];
+			
+		}
+		A[0] = temp; 
+		total_rotations--; 
+	}
+
+}
+
+
+int main()
+{    
+	char A[] = { 'a','b','c','d','e','f','g','h'};
+	int size = sizeof(A) / sizeof(A[0]);
+	int k = -2;
+	rotate( A, size , k ); 
+	display(A, size);
+	return 0;
+}
