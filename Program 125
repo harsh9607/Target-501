@@ -8,8 +8,8 @@ void TOH(int Num , char A , char B , char C)
 {
     if(Num == 1 )
     {
-        cout<<Num <<"|"<<A <<"->"<<C<<endl;
-        cout<<Num<<"|"<< C <<"->"<<B<<endl;
+        cout<<Num <<"|"<<A <<"->"<<B<<endl;
+        
         
     }
     
