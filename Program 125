@@ -1,0 +1,29 @@
+/******************************************************************************
+Tower of hanoi
+*******************************************************************************/
+#include <iostream>
+using namespace std; 
+
+void TOH(int Num , char A , char B , char C)
+{
+    if(Num == 1 )
+    {
+        cout<<Num <<"|"<<A <<"->"<<C<<endl;
+        cout<<Num<<"|"<< C <<"->"<<B<<endl;
+        
+    }
+    
+    else
+    {
+        TOH(Num-1,A,C,B);
+        cout<<Num <<"|"<<A <<"->"<<B<<endl;
+        TOH(Num-1,C,B,A);
+    }
+}
+
+
+int main()
+{
+ TOH(3,'A','B','C');    
+ return 0;
+}
