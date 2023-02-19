@@ -29,10 +29,9 @@ int64_t fib(int64_t n , int64_t A[])
 	}
 
 	int64_t x = fib(n - 1, A ); 
-	A[n - 1] = x; 
 	int64_t y = fib(n - 2 ,A );
-	A[n - 2] = y; 
-	return x+y; 
+	A[n] = x+y ;
+	return A[n]; 
 }
 
 int64_t fib1(int64_t x)
