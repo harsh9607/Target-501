@@ -43,6 +43,15 @@ void DFS(char Source , stack<char>&S )
 	   
 }
 
+void DFS(char Source)
+{
+	cout<<Source;
+	for(auto it :Map[Source])
+	{
+		DFS(it);
+	}
+}
+
 void BFS(char Source, queue<char>& Q)
 {	if(Q.empty())
 	Q.push(Source);
