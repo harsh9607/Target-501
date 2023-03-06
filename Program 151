@@ -1,0 +1,89 @@
+// Deletion in a Heap 
+#include<iostream>
+using namespace std; 
+
+class heap{
+private: 
+	int arr[100]; 
+	int size; 
+	
+public: 
+	heap(){
+		arr[0] = -1; 
+		size = 0; 
+	}
+
+	void print()
+	{
+		for (int i = 1; i <= size; i++)
+		{
+			cout << arr[i] << " "; 
+		}
+		cout << endl; 
+	}
+	
+	void insert( int a )
+	{
+		size++; 
+		int index = size;
+		arr[index] = a;
+		int parent = index / 2; 
+		while (index > 1)
+		{
+			if (arr[parent] < arr[index])
+			{
+				std::swap(arr[parent], arr[index]);
+				index = parent; 
+			}
+			else
+			{
+				return;
+			}
+		}
+	}
+
+	void delete_() 
+	{
+		arr[1] = arr[size]; 
+		size--; 
+
+		int i = 1; 
+		while (i < size)
+		{
+			int lc_index = 2 * i; 
+			int rc_index = lc_index + 1; 
+
+			if (lc_index <= size && arr[lc_index] > arr[i] && arr[lc_index] > arr[rc_index])
+			{
+				swap(arr[lc_index], arr[i]);
+				i = lc_index;
+			}
+			else if (rc_index <= size && arr[rc_index] > arr[i] && arr[rc_index] > arr[lc_index])
+			{
+				swap(arr[rc_index], arr[i]);
+				i = rc_index;
+			}
+			else
+			{
+				return;
+			}
+		}
+	}
+};
+
+int main()
+{
+	heap h; 
+	h.insert(53);
+	h.insert(50);
+	h.insert(69);
+	h.insert(23);
+	h.insert(36);
+	h.insert(29);
+	h.insert(22);
+	h.insert(20);
+	h.print(); 
+	h.delete_();
+	h.print();
+	return 0; 
+}
