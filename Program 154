@@ -1,0 +1,199 @@
+// Paradox test 
+#include<iostream>
+#include<vector>
+#include<queue>   // Used for BFS
+#include<unordered_set>    // Used to store visited index
+using namespace std; 
+
+int FindPath(const int nStartX, const int nStartY,
+    const int nTargetX, const int nTargetY,
+    const unsigned char* pMap, const int nMapWidth, const int nMapHeight,
+    int* pOutBuffer, const int nOutBufferSize)
+{
+    // Setting up a 2d matrix for pMap 
+    int pMap_2d[nMapHeight][nMapWidth] = { 0 }; 
+    int k = 0 , z = 0 ;  
+    vector<int> V , level ;
+    
+    for(int i=0 ; i<nMapHeight ; i++)
+    {
+        for(int j=0 ; j<nMapWidth ; j++)
+        {
+            pMap_2d[i][j] = pMap[z];
+            z++;
+        }
+    }
+    
+    
+    // Solution approach - BFS search
+    // Queue to store x and y coordinates
+    queue<int> q_X , q_Y , dummy_X , dummy_Y ; 
+    
+    unordered_set<int> Set;
+    q_X.push(nStartY); 
+    q_Y.push(nStartX);
+    int flag = -1 ; // if flag == -1 after the loop then no solution possible
+    
+    // While queue is not empty
+    while( (!q_X.empty()) && (!q_Y.empty()))
+    {   int x  = q_X.front(); 
+        int y =  q_Y.front();
+        
+        if(x == nTargetY && y == nTargetX)
+        {   flag =0 ; 
+            V.push_back(x*nMapWidth + y);
+            level.push_back(k);
+            break ; 
+            
+        }
+        
+        
+        // visited ( x, y) 
+        Set.insert(x*nMapWidth + y) ; 
+        V.push_back(x*nMapWidth + y);
+        level.push_back(k);
+        // Poping element from the queue
+        q_X.pop(); q_Y.pop();
+        
+        // Any point can move left or right or up or down
+        int l_x , l_y; // left of given coordinate
+        int u_x, u_y;  // Up from given coordinate
+        int d_x,d_y;   // Down from given coordinate
+        int r_x , r_y; // Right from given coordinate
+        
+        // Initialising all the neighbouring coordinats possible 
+        l_x = x ;   l_y = y-1; 
+        r_x = x ;   r_y = y+1;
+        u_x = x-1 ; u_y = y; 
+        d_x = x+1 ; d_y = y;
+        
+        // Now lets Move the character. 
+        // If both coordinates are valid , visitable and unvisited before 
+        if( l_y>=0 && pMap_2d[l_x][l_y] == 1 && Set.find(l_x*nMapWidth + l_y)==Set.end())
+        {
+            cout<<"1 . inserting to dummy x = "<<l_x<<" & y = "<<l_y<<endl;
+            dummy_X.push(l_x);
+            dummy_Y.push(l_y);
+        }
+        
+        if( r_y < nMapWidth && pMap_2d[r_x][r_y] == 1 && Set.find(r_x*nMapWidth + r_y)==Set.end())
+        {
+            cout<<"2 . inserting to dummy x = "<<r_x<<" & y = "<<r_y<<endl;
+            dummy_X.push(r_x);
+            dummy_Y.push(r_y);
+        }
+        if(u_x >=0  && pMap_2d[u_x][u_y] == 1 && Set.find(u_x*nMapWidth + u_y)==Set.end())
+        {
+            cout<<"3 . iserting to dummy x = "<<u_x<<" & y = "<<u_y<<endl;
+            dummy_X.push(u_x);
+            dummy_Y.push(u_y);
+        }
+        if(d_x <nMapHeight  && pMap_2d[d_x][d_y] == 1 && Set.find(d_x*nMapWidth + d_y)==Set.end())
+        {
+            cout<<"1 . iserting to dummy x = "<<d_x<<" & y = "<<d_y<<endl;
+            dummy_X.push(d_x);
+            dummy_Y.push(d_y);
+        }
+        
+        
+        // Now transferring the elements to main queue and incrementing K
+        if(q_X.empty()) 
+        {
+            while(!dummy_X.empty())
+            {
+                q_X.push(dummy_X.front());
+                q_Y.push(dummy_Y.front());
+            
+                if(!dummy_X.empty())
+                dummy_X.pop();
+                if(!dummy_Y.empty())
+                dummy_Y.pop();
+            
+              
+            }
+              k++;
+        }
+    }
+    
+    // If target was unreachable then 
+    if(flag==-1)
+    { k=-1;}
+    
+    if(k>0 && nOutBufferSize >= k)
+    {
+        int index=0; 
+        // V2 is the vector that holds the path of pOutBuffer
+         vector<int> V2; 
+        /*
+       for(int i=V.size()-1 ; i>=0;i-- )
+       {
+           cout<<V[i]<<" ";
+       }
+       */
+       for(auto it : V)
+       {
+           cout<<it<<" "; 
+       }
+       cout<<endl; 
+       for(auto it : level)
+       {
+           cout<<it<<" "; 
+       }
+       cout<<endl; 
+       int forbidden_level , t ; 
+           for(int i=V.size()-1 ; i>=0;i-- )
+            {
+                if(i==V.size()-1)
+                {   
+                    forbidden_level = level[i]; 
+                    V2.push_back(V[i]);
+                    t = i ;
+                }
+                
+                if(level[i]!=forbidden_level )
+                {
+                    // neighbours 
+                    int n1 ,n2,n3,n4; 
+                    n1 = V[t]-1;
+                    n2 = V[t]+1 ;
+                    n3 = V[t] - nMapWidth; 
+                    n4 = V[t] + nMapWidth;
+                    
+                    if(V[i] == n1 || V[i] == n2 || V[i] == n3 || V[i] == n4 )
+                    {
+                        V2.push_back(V[i]); 
+                        forbidden_level = level[i];
+                        t=i; 
+                    }
+                }
+            }
+            
+          
+            for(int i = V2.size() -2 ; i >= 0 ; i--)
+            {
+                pOutBuffer[index] = V2[i];
+                index++;
+            }
+        
+           
+            cout<<"pOutBuffer : ";
+            for(int i =  0; i < index ; i++)
+            {
+                cout<<pOutBuffer[i]<<" "; 
+            }
+             cout<<endl;
+            
+    }
+    
+return k;
+}
+
+int main()
+{
+    unsigned char pMap[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+    int pOutBuffer[12];
+
+    int k = FindPath(0, 0, 2, 2, pMap, 3, 3, pOutBuffer, 12);
+    cout<<"k = "<<k;
+	return 0; 
+}
