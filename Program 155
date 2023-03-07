@@ -1,0 +1,236 @@
+// Paradox kattis test 
+#include<iostream>
+#include<vector>
+#include<queue>             // Used for BFS
+#include<unordered_set>    // Used to store visited index
+using namespace std; 
+
+int FindPath(const int nStartX, const int nStartY,
+    const int nTargetX, const int nTargetY,
+    const unsigned char* pMap, const int nMapWidth, const int nMapHeight,
+    int* pOutBuffer, const int nOutBufferSize)
+{    
+    /*
+    Approach 
+    0. Convert 1d array to 2d 
+    1. Use Breadth First Search(BFS) to find the target from source
+    2. Store all visited nodes in a vector
+    3. Backtrack the vector and find the desired shortest path
+    4. Store min path length in k and desired path in pOutbuffer
+    */   
+
+    // Setting up a 2d matrix for pMap 
+    int pMap_2d[nMapHeight][nMapWidth] = { 0 }; 
+    
+    // z -> temporary varible 
+    // k-> Value that will be returned
+    int k = 0 , z = 0 ;  
+    
+    // Vector V used to store index and vector level
+    // will be used in later half of program 
+    // for backtracking to find the shortest path.  
+    vector<int> V , level ;
+    
+    // Copying the 1d array to 2d array 
+    for(int i=0 ; i<nMapHeight ; i++)
+    {
+        for(int j=0 ; j<nMapWidth ; j++)
+        {
+            pMap_2d[i][j] = pMap[z];
+            z++;
+        }
+    }
+    
+    
+    
+    // Queue to store x (row) and y (coloum) coordinates
+    // NOTE : nStarty/nTargety -> #row  ie. x in the program
+    // NOTE : nStartx/nTargetx -> #col  ie. y in the program
+    // In India we use x -> row and y->coloum 
+    // hence you will see in program I wrote x = nTargetY 
+    
+    // queue Data struture from C++ STL library
+    // Used for BFS implementation  
+    // q_X and q_Y is the primary queue 
+    // dummy queue is used to store all child nodes
+    // they are later transfered to main queue; 
+    queue<int> q_X , q_Y , dummy_X , dummy_Y ; 
+    
+    // Set stores visited nodes 
+    unordered_set<int> Set;
+    q_X.push(nStartY); // dont be confused i used X -> row  
+    q_Y.push(nStartX); 
+    
+    // if flag == -1 after the loop then no solution possible
+    int flag = -1 ; 
+    
+    
+    // While queue is not empty **BFS BEGINS **
+    while( (!q_X.empty()) && (!q_Y.empty()))
+    {   
+        int x  = q_X.front(); 
+        int y =  q_Y.front();
+        
+        if(x == nTargetY && y == nTargetX)
+        {   
+            flag =0 ; 
+            V.push_back(x*nMapWidth + y);
+            level.push_back(k);
+            break ; 
+        }
+        
+        
+        // visited ( x, y) 
+        Set.insert(x*nMapWidth + y) ; 
+        V.push_back(x*nMapWidth + y);
+        level.push_back(k);
+        
+        // Poping element from the queue
+        q_X.pop(); q_Y.pop();
+        
+        // Any point can move left or right or up or down
+        int l_x , l_y; // left of given coordinate
+        int u_x, u_y;  // Up from given coordinate
+        int d_x,d_y;   // Down from given coordinate
+        int r_x , r_y; // Right from given coordinate
+        
+        // Initialising all the neighbouring coordinats possible 
+        l_x = x ;   l_y = y-1; 
+        r_x = x ;   r_y = y+1;
+        u_x = x-1 ; u_y = y; 
+        d_x = x+1 ; d_y = y;
+        
+        // Now lets Move the character. 
+        // If both <child>coordinates  are valid , visitable and unvisited  
+        if( l_y>=0 && pMap_2d[l_x][l_y] == 1 && Set.find(l_x*nMapWidth + l_y)==Set.end())
+        {
+           // cout<<"1 . inserting to dummy x = "<<l_x<<" & y = "<<l_y<<endl;
+            dummy_X.push(l_x);
+            dummy_Y.push(l_y);
+        }
+        
+        if( r_y < nMapWidth && pMap_2d[r_x][r_y] == 1 && Set.find(r_x*nMapWidth + r_y)==Set.end())
+        {
+           // cout<<"2 . inserting to dummy x = "<<r_x<<" & y = "<<r_y<<endl;
+            dummy_X.push(r_x);
+            dummy_Y.push(r_y);
+        }
+        if(u_x >=0  && pMap_2d[u_x][u_y] == 1 && Set.find(u_x*nMapWidth + u_y)==Set.end())
+        {
+           // cout<<"3 . inserting to dummy x = "<<u_x<<" & y = "<<u_y<<endl;
+            dummy_X.push(u_x);
+            dummy_Y.push(u_y);
+        }
+        if(d_x <nMapHeight  && pMap_2d[d_x][d_y] == 1 && Set.find(d_x*nMapWidth + d_y)==Set.end())
+        {
+           // cout<<"1 . inserting to dummy x = "<<d_x<<" & y = "<<d_y<<endl;
+            dummy_X.push(d_x);
+            dummy_Y.push(d_y);
+        }
+        
+        
+        // Now transferring the elements to main queue and incrementing K
+        if(q_X.empty()) 
+        {
+            while(!dummy_X.empty())
+            {
+                q_X.push(dummy_X.front());
+                q_Y.push(dummy_Y.front());
+            
+                if(!dummy_X.empty())
+                dummy_X.pop();
+                if(!dummy_Y.empty())
+                dummy_Y.pop();
+            
+              
+            }
+              k++;
+        }
+    }
+    
+    // If target was unreachable then 
+    if(flag==-1)
+       k=-1;
+    
+    if(k>0 && nOutBufferSize >= k)
+    {
+        int index=0; 
+        // V2 is the vector that holds the shorest path ie. pOutBuffer
+         vector<int> V2; 
+        
+
+       // Backtracking 
+       // start from target and move to its neighbour
+       // delete/remove all other elements 
+       // for example V =  0 1 2 5 3 9
+       //        level  =  0 1 1 2 2 3 
+       //This becomes      0 1 _ 5 _ 9
+       // So path (index)  0 -> 1 -> 5 -> 9 
+       // This same path is stored in pOutBuffer ofc without 
+       //starting / source node 
+       
+       // In the above example see 5 and 3 are at same level ie. 2 
+       // forbidden level would stop more than one element from 
+       // being copied into vector V2 ; 
+
+       // t -> index of the last copied element  
+       int forbidden_level , t ; 
+           
+           for(int i=V.size()-1 ; i>=0;i-- )
+            {
+                if(i==V.size()-1)
+                {   
+                    forbidden_level = level[i]; 
+                    V2.push_back(V[i]);
+                    t = i ;
+                }
+                
+                if(level[i]!=forbidden_level )
+                {
+                    // neighbours 
+                    int n1 ,n2,n3,n4; 
+                    n1 = V[t]-1;
+                    n2 = V[t]+1 ;
+                    n3 = V[t] - nMapWidth; 
+                    n4 = V[t] + nMapWidth;
+                    
+                    if(V[i] == n1 || V[i] == n2 || V[i] == n3 || V[i] == n4 )
+                    {
+                        V2.push_back(V[i]); 
+                        forbidden_level = level[i];
+                        t=i; 
+                    }
+                }
+            }
+            
+            // Populating pOutBuffer
+            // V2.size() - 2 becos we dont want to copy src node
+            for(int i = V2.size() -2 ; i >= 0 ; i--)
+            {
+                pOutBuffer[index] = V2[i];
+                index++;
+            }
+        
+            
+            // Delete this -- only for testing            
+            cout<<"pOutBuffer : ";
+            for(int i =  0; i < index ; i++)
+            {
+                cout<<pOutBuffer[i]<<" "; 
+            }
+             cout<<endl;
+            // Delete till this 
+    }
+    
+return k;
+}
+
+int main()
+{
+    unsigned char pMap[] = {1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1};
+    int pOutBuffer[12];
+    int k = FindPath(0, 0, 1, 2, pMap, 4, 3, pOutBuffer, 12);
+    cout<<"k = "<<k;
+
+    return 0; 
+}
