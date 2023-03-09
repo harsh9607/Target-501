@@ -1,0 +1,68 @@
+// 12 hour to 14 hour format convertor.
+#include <bits/stdc++.h>
+
+using namespace std;
+
+/*
+ * Complete the 'timeConversion' function below.
+ *
+ * The function is expected to return a STRING.
+ * The function accepts STRING s as parameter.
+ */
+
+string timeConversion(string s) {
+   string ans = ""; 
+   string dayornight = s.substr(8,2);
+   if(dayornight == "PM")
+   {
+        char h1 , h2; 
+        h1 = s[0];
+        h2 = s[1];
+        
+        if(h1=='1' && h2 == '2' )
+        {
+            ans = "12:" + s.substr(3,5);
+        }    
+        else{
+                int lh , rh ; 
+                lh = h1 - 48; 
+                rh = h2 - 48; 
+                int num = lh*10+rh + 12 ;
+                ans = to_string(num) + s.substr(2,6) ; 
+                
+            }
+   }
+   
+   else
+   {
+       
+       char h1 , h2; 
+        h1 = s[0];
+        h2 = s[1];
+        if(h1=='1' && h2 == '2' )
+        {
+            ans = "00:" + s.substr(3,5);
+        }    
+        else{
+                ans = s.substr(0,8);
+            }
+        
+   } 
+    return ans;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string s;
+    getline(cin, s);
+
+    string result = timeConversion(s);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
