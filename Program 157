@@ -1,0 +1,73 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	// your code goes here
+	int t; 
+	cin>>t; 
+	while(t--)
+	{  
+	    vector<string> strings;
+	    string s , left="Left" , right="Right";
+	    int x = 0 ; 
+	    
+	    int n ; cin>>n; 
+	    
+	    // Input Strings 
+	    getline(cin, s);
+        
+        while (n--) {
+        getline(cin, s);
+        strings.push_back(s);
+        }
+	    
+	    // Process Path 
+	    
+	     for(int i=strings.size()-1 ; i>=0 ;  i-- )
+    	 {  
+    	    if( i == strings.size()-1 )
+        	{
+        	    if(strings[i][0] == 'L')
+        	    {
+        	        x = 1;         
+        	        cout<<"Begin on "<<strings[i].substr(8)<<endl;
+        	    }
+        	    else
+        	    {
+        	        x=0; 
+        	         cout<<"Begin on "<<strings[i].substr(9)<<endl;
+        	    }
+    	    }
+    	    
+    	    else 
+    	    {
+    	        
+    	        string ans ;
+    	        if(x==0)
+    	        {
+    	            ans = left; 
+    	        }
+    	        else
+    	        {
+    	            ans = right; 
+    	        }
+    	        cout<<ans<<" on "; 
+    	        
+    	        if(strings[i][0] == 'L')
+    	        {
+    	            x = 1; 
+    	            cout<<strings[i].substr(8)<<endl;
+    	        }
+    	        else 
+    	        {
+    	            x=0;
+    	            cout<<strings[i].substr(9)<<endl;
+    	        }
+    	    }
+    	    
+         }
+         
+	}
+	return 0;
+}
