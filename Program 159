@@ -1,0 +1,98 @@
+// Codechef - Chef and Rainbow array 
+#include <iostream>
+#include<set>
+#include<stack>
+#include<map>
+
+using namespace std;
+
+int main() {
+	// your code goes here
+	int t; cin>>t; 
+	while(t--)
+	{
+	    int x; cin>>x; 
+	    int A[x]; 
+	    set<int> Set = {1,2,3,4,5,6,7}; 
+	    map<int,int> Map; 
+	    Map[1] = 0;Map[2] = 0;Map[3] = 0;
+	    Map[4] = 0;Map[5] = 0;Map[6] = 0;
+	    Map[7] = 0;
+	    
+	    string ans; 
+	    int flag = 1; 
+	    for(int i=0 ; i<x ; i++)
+	    {
+	        cin>>A[i];
+	        if(Set.find(A[i]) == Set.end())
+	        {flag = -1; }
+	    }
+	    
+	    
+	    if(flag == -1)
+	    {
+	        cout<<"no\n";
+	    }
+	    
+	    
+	    
+	    
+	    else { 
+    	
+    	    for(int i=0 ; i<x ; i++)
+	        {
+                Map[A[i]]++;	       
+	        } 
+	        
+	        for(auto it:Map)
+	        {
+	            if(it.second == 0)
+	            {
+	                flag = -1; 
+	            }
+	        }
+    	    
+    	    if(flag == -1)
+    	    {
+    	        cout<<"no\n";
+    	    }
+    	    
+    	    else {     
+        	    
+        	    stack<int> S ; 
+        	    int begin = 0 ; 
+        	    int end   = x-1;
+        	    int i=1; 
+        	    while(S.empty() && begin<end)
+        	    {   
+        	        if(!S.empty())
+        	        {
+        	            break;
+        	        }
+        	        
+        	        S.push(A[begin]);
+        	        i = max(i,A[begin]);
+        	        if(S.top() == A[end] && S.top()>=i)
+        	        {
+
+        	            S.pop();
+        	        }
+        	       
+        	        begin++; 
+        	        end--;
+        	    }
+        	    
+        	    if(S.empty())
+        	    {
+        	        cout<<"yes\n";
+        	    }
+        	    else
+        	    {
+        	        cout<<"no\n";
+        	    }
+    	    }
+	    }
+	// t--    
+	}
+	return 0;
+}
