@@ -1,0 +1,97 @@
+// CODECHEF - MAKE_AB_SAME
+#include <iostream>
+using namespace std;
+
+int main ()
+{
+  // your code goes here
+  int t;
+  cin >> t;
+  while (t--)
+    {
+      int n;
+      cin >> n;
+      int A[n], B[n], ones_A = 0, flag = 0;
+      for (int i = 0; i < n; i++)
+      {
+	  cin >> A[i];
+	  }
+	    for (int i = 0; i < n; i++)
+	    {
+		cin >> B[i];
+	    }
+
+	  if (A[0] != B[0] || A[n - 1] != B[n - 1])
+	    {
+	      cout << "NO\n";
+	    }
+
+	  else
+	    {
+	        // prefix matrix 
+	        int right_side[n] = {0} ; 
+	        int left_side[n]  = {0} ;
+	        bool flag = false; 
+	        for(int i=0 ; i<n ;i++)
+	        {
+	            if(flag)
+	            {
+	                left_side[i] = 1; 
+	            }
+	            else
+	            {
+	                if(A[i] == 1)
+	                {
+	                    flag = true; 
+	                }
+	            }
+	        }
+	        // Suffix matrix
+	        for(int i=n-1 ; i>=0 ;i--)
+	        {
+	            if(flag)
+	            {
+	                right_side[i] = 1; 
+	            }
+	            else
+	            {
+	                if(A[i] == 1)
+	                {
+	                    flag = true; 
+	                }
+	            }
+	        }
+	        
+	        bool Ans = true; 
+	        // Check for i = 1 to n-2 
+	        for(int i=1 ; i<=n-2 ; i++)
+	        {
+	            if(B[i]!=A[i])
+	            {
+	                if(B[i] == 0 && A[i] == 1)
+	                {
+	                    Ans = false ; 
+	                    break ;
+	                }
+	                else if ( B[i] == 1 && A[i] == 0)
+	                {
+	                    if(left_side[i] == 0 && right_side[i] ==0 )
+	                    {
+	                        Ans = false;
+	                        break;
+	                    }
+	                    
+	                }
+	            }
+	        }
+	        
+	        if(Ans)
+	        cout<<"YES\n";
+	        else
+	        cout<<"NO\n";
+	        
+ 	     }
+     }
+	    
+      return 0;
+    }
