@@ -1,0 +1,40 @@
+// Print Binary
+
+#include <iostream>
+
+using namespace std;
+
+void printBinary(int x)
+{
+    for(int i=10 ; i>=0; i--)
+    {
+        cout<< (( x>>i )&1); 
+    }
+}
+
+void Toggle(int x , int start , int end)
+{
+    int mask = 1 ;
+    
+    for(int i=0; i<start ; i++)
+    {
+        mask = mask<<1; 
+    }
+    cout<<"\nmask : "<<mask<<endl; 
+    for(int i= start ; i<=end; i++)
+    {
+        x = x^mask; 
+        mask = mask<<1; 
+    }
+    
+    printBinary(x) ;
+    
+}
+
+int main()
+{
+    int i = 127 ;
+    printBinary(i);
+    Toggle(i,2,5); 
+    return 0;
+}
