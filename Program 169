@@ -1,0 +1,46 @@
+// Learning Smart Pointers 
+#include <iostream>
+#include<memory>
+using namespace std;
+
+class foo
+{
+    int x;
+
+public:
+    foo(int a) : x(a) { std::cout << "Object was created \n"; }
+    ~foo() { std::cout << "Destructor called \n"; }
+
+    void show()
+    {
+        cout << "God help us all\n";
+    }
+
+    int getX()
+    {
+        return x;
+    }
+
+};
+
+
+int main()
+{
+    // 2 ways of creating a unique  pointer 
+    std::unique_ptr<foo> p(new foo(10));
+    std::unique_ptr<foo> q = make_unique<foo>(10);  // use this as make_unique has implicit exception handling 
+    
+    cout << p->getX()<<endl;
+    
+    // Shared ptr has Ownership of resource means it has the responsibility to clean up / free /delete the pointer object 
+    int a = 70; 
+    
+    
+    std::unique_ptr<int> My_ptr = make_unique<int>(a);
+    cout << "My unique pointer points to " << *My_ptr <<endl; 
+    int* tmp = &a; 
+    *tmp = *tmp + 1; 
+    cout << *tmp; 
+    delete tmp;  // This will throw an error as ownership is with unique_ptr named My_ptr 
+    return 0;
+}
