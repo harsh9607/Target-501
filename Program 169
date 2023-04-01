@@ -1,4 +1,4 @@
-// Learning Smart Pointers 
+// Learning Smart Pointers
 #include <iostream>
 #include<memory>
 using namespace std;
