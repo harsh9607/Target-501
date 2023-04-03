@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+class A 
+{
+    public : int x ; 
+    virtual void show()
+    {
+        cout<<"Inside function A"; 
+    }
+
+    
+};
+
+class B  : public A 
+{
+    public : 
+    void show()
+    {
+        cout<<"Inside function B"; 
+    }
+    
+};
+
+int main()
+{   B b ;
+    A a ; 
+    A* p = &b ;
+    p->show(); 
+
+    return 0;
+}
