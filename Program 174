@@ -1,0 +1,23 @@
+// Functor - Classes that act as functions. 
+#include<bits/stdc++.h>
+using namespace std; 
+
+class functor{
+    
+    public : int result ;
+    functor() : result(0) {}; 
+    int operator() (int a)
+    {
+        result+= a;
+        return result; 
+    }
+}; 
+
+int main()
+{
+    functor Adder ;
+    int n1 = Adder(10); 
+    int n2 = Adder(20); 
+    cout<< n1<<"\t" <<n2<<endl; 
+    return 0 ; 
+}
