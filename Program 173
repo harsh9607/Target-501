@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    vector<int> V  ; 
+    V.push_back(10) ;
+    V.push_back(6) ;
+    V.push_back(3) ;
+    V.push_back(8) ;
+    V.push_back(1) ;
+    
+    sort(V.begin() , V.end());
+    
+    auto it = find(V.begin() , V.end() , 1 ) ;
+    V.erase(it);
+    
+    for(int it : V)
+    {
+        cout<< it <<"  "; 
+    }
+    
+    return 0;
+}
