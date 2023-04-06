@@ -1,0 +1,94 @@
+// Balanced binary search tree creation  
+#include<iostream>
+using namespace std;
+
+struct node
+{
+    int data; 
+    node* left; 
+    node* right; 
+    node(int val=0)
+    {
+        data  = val; 
+        left  = NULL; 
+        right = NULL ;
+    }
+    
+    
+};
+
+class BST
+{  
+   public: 
+   node* root; 
+   BST() : root(NULL) {}
+   
+   void insert(node* &Root , int data) 
+   {
+       if(Root == NULL)
+       {   
+           // Creating a Node for Root and placing it there
+           Root = new node(data);
+           return ;
+       }
+       
+       if( data < Root->data )
+       {
+           insert( Root->left , data ) ; 
+       }
+       
+       else if ( data > Root->data)
+       {
+           insert( Root->right , data) ;
+       }
+       
+   }
+   
+   void display(node* Node)
+   {   
+       //Preorder
+       if(Node == NULL)
+       {
+           return;
+       }
+       
+       cout<<Node->data <<"\t "; 
+       display(Node->left) ;
+       display(Node->right) ;
+   }
+   
+   void Inorder(node* Node)
+   {
+       if(Node == NULL)
+       {
+           return; 
+       }
+       
+       Inorder(Node->left); 
+       cout<<Node->data<<"\t "; 
+       Inorder(Node->right); 
+       
+   }
+   
+   
+}; 
+
+
+
+
+int main()
+{
+   BST B1; 
+   B1.insert(B1.root, 50);
+   B1.insert(B1.root, 30);
+   B1.insert(B1.root, 20);
+   B1.insert(B1.root, 40);
+   B1.insert(B1.root, 70);
+   B1.insert(B1.root, 60);
+   B1.insert(B1.root, 80);
+   
+   B1.display(B1.root) ; 
+   cout<<endl;
+   B1.Inorder(B1.root) ;
+    return 0;
+}
