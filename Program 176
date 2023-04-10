@@ -1,0 +1,28 @@
+// Introduction to templates in C++ 
+#include <bits/stdc++.h>
+using namespace std;
+
+template<typename T > 
+void print(T value )
+{
+    cout<< "Value = " << value << endl;
+}
+
+
+template<typename T1,  typename T2> 
+void add(T1 t1 , T2 t2) 
+{
+    cout<< "Sum = " <<t1 + t2<< endl; 
+}
+
+
+int main()
+{
+    print<int>(2); 
+    print<double>(3.14);
+    print<string>("Harsh"); 
+
+    add<int , int >(2,3) ;
+    add<int , double >(2, 3.14); 
+    return 0;
+}
