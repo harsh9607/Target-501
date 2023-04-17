@@ -1,0 +1,69 @@
+// Class Templates 
+#include <iostream>
+using namespace std;
+
+template<class T1 , class T2 >
+class Pair{
+    
+    T1 first;
+    T2 second; 
+    
+    public : // Default ctor
+             Pair():first(T1()) , second(T2())
+             {}
+             // Param ctor
+             Pair(const T1 f ,const T2 s )
+             {
+                 first  = f ; 
+                 second = s ; 
+             }
+             // Copy ctor 
+             Pair( Pair< T1, T2> &other)
+             {
+                 first = other.first;
+                 second = other.second; 
+             }
+             
+             bool operator == ( const Pair<T1,T2 > &other )  
+             {
+                 return first == other.first && second== other.second ; 
+             }
+             
+             bool operator > (const Pair<T1,T2> & other)
+             {
+                 return first>other.first && second>other.second; 
+                 
+             }
+             
+             bool operator != (const Pair<T1,T2> &other)
+             {
+                 return first!=other.first || second != other.second; 
+             }
+             
+             bool operator < (const Pair<T1,T2> & other)
+             {
+                 return first>other.first && second>other.second; 
+                 
+             }
+             
+             void setData(T1 a, T2 b )
+             {
+                 first = a; 
+                 second = b; 
+             }
+    
+};
+
+
+int main()
+{
+    Pair<int,int> P1(3,12);
+    Pair<float,int> P2(3.0,12);
+    Pair<float,int> P3(P2); 
+    if( P3 > P2 )
+    {
+        cout<<"Pairs are equal"; 
+    }
+    
+    return 0;
+}
