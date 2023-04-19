@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void solve(string &s , int &ans)
+{
+    string substr1 = "01";
+    size_t pos = s.find(substr1);
+    if(pos == string::npos)
+    {return;}
+    s.erase(pos, substr1.length());
+    ans++;
+    solve(s,ans);
+    
+}
+
+void solve2(string &s , int &ans)
+{
+    
+    string substr1 = "10";
+    size_t pos = s.find(substr1);
+    if(pos == string::npos)
+    {return;}
+    s.erase(pos, substr1.length());
+    ans++;
+    solve2(s,ans);
+    
+}
+
+
+
+int main() {
+	// your code goes here
+	int t; 
+	cin>>t ;
+	while(t--)
+	{   int e; cin>>e; 
+	    string s ;
+	    cin>>s ;
+	    if(s.length()<=1)
+	    {
+	        cout<<"Ramos\n";
+	    }
+	    else if(s.length() ==2 )
+	    {
+	        if( s=="01" || s=="10")
+	        {
+	            cout<<"Zlatan"<<endl;
+	        }
+	        else
+	        {
+	            cout<<"Ramos\n";
+	        }
+	    }
+	    
+	    else
+        {  int ans=0; 
+           solve(S,ans);
+                      solve2(S,ans);
+                                 solve(S,ans);
+                                               solve2(S,ans);
+        
+        if(ans%2==1)
+        {
+            cout<<"Zlatan\n";
+        }
+        else
+        {
+            cout<<"Ramos\n";
+        }
+
+                        
+        }
+	}
+	return 0;
+}
